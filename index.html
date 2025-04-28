@@ -23,8 +23,8 @@
     }
 
     table {
-      width: 50%; /* Đặt độ rộng của bảng là 50% */
-      margin: 0 auto; /* Căn giữa bảng */
+      width: 50%;
+      margin: 0 auto;
       border-collapse: collapse;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       border-radius: 10px;
@@ -33,7 +33,7 @@
 
     table th, table td {
       padding: 1rem;
-      text-align: center; /* Căn giữa nội dung của các ô */
+      text-align: center;
     }
 
     table thead {
@@ -44,6 +44,22 @@
       background-color: #f9f9f9;
     }
 
+    h2 {
+      text-align: center; /* Căn giữa các tiêu đề */
+      font-weight: bold; /* Làm chữ đậm */
+      font-size: 1.2em; /* Cỡ chữ lớn hơn một chút */
+      margin-top: 20px; /* Khoảng cách trên */
+      margin-bottom: 20px; /* Khoảng cách dưới */
+    }
+
+    #giaTieu {
+      text-align: center; /* Căn giữa nội dung tiêu đề */
+      font-weight: bold; /* Làm chữ đậm */
+      font-size: 1.2em; /* Cỡ chữ lớn hơn một chút */
+      margin-top: 20px; /* Khoảng cách trên */
+      margin-bottom: 20px; /* Khoảng cách dưới */
+    }
+
   </style>
 </head>
   
@@ -51,8 +67,7 @@
   <h1>🌱 Giá Cà Phê & Giá Tiêu Hôm Nay 🌱</h1>
 
   <div class="section" id="caphe">
-    <h2>☕ Cà Phê</h2>
-
+    <h3 id="capheDate">☕ Giá Cà Phê Hôm Nay Ngày</h3>
     <div style="overflow-x: auto; margin-top: 1rem;">
       <table>
         <thead>
@@ -74,12 +89,31 @@
   </div>
 
   <div class="section" id="tieu">
-    <h2>🌰 Tiêu</h2>
+    <h3 id="tieuDate">🌰 Giá Tiêu Hôm Nay Ngày</h3>
     <div id="giaTieu">Đang tải giá tiêu...</div>
   </div>
 
   <script src="script-hoa-roi.js"></script>
   <script>
+    // Hàm lấy ngày hiện tại
+    function getCurrentDate() {
+      const today = new Date();
+      const day = today.getDate();
+      const month = today.getMonth() + 1; // Tháng bắt đầu từ 0
+      const year = today.getFullYear();
+      return `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+    }
+
+    // Cập nhật ngày vào tiêu đề
+    function updateTitles() {
+      const currentDate = getCurrentDate();
+      document.getElementById('capheDate').innerHTML = `☕ Giá Cà Phê Hôm Nay Ngày ${currentDate}`;
+      document.getElementById('tieuDate').innerHTML = `🌰 Giá Tiêu Hôm Nay Ngày ${currentDate}`;
+    }
+
+    // Gọi hàm để cập nhật ngày khi trang tải
+    updateTitles();
+
     async function loadGia() {
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
@@ -113,7 +147,7 @@
     }
 
     loadGia();
-    const reloadTime = 5000; // 5 giây
+    const reloadTime = 1000; // 1 giây
     setInterval(loadGia, reloadTime);
   </script>
 </body>
