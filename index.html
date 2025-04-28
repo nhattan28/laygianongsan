@@ -96,7 +96,7 @@
         let cpHTML = `Ngày: ${cp.ngay}<br>💰 Giá: ${cp.gia.toLocaleString('vi-VN')} VNĐ/kg<br>`;
         if (cp.thaydoi > 0) cpHTML += `➕ Tăng: ${cp.thaydoi.toLocaleString('vi-VN')} VNĐ/kg`;
         else if (cp.thaydoi < 0) cpHTML += `➖ Giảm: ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')} VNĐ/kg`;
-        else cpHTML += ` Không đổi`;
+        else cpHTML += `Không đổi`;
         document.getElementById('giaCaPhe').innerHTML = cpHTML;
 
         // Tiêu
@@ -104,7 +104,7 @@
         let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
         tieu.data.forEach(item => {
           let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` : 
-                      item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `🟰 0`;
+                      item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `Không đổi`;
           tieuHTML += `<tr><td>${item.khuVuc}</td><td>${item.giaMua.toLocaleString('vi-VN')}</td><td>${change}</td></tr>`;
         });
         tieuHTML += `</table>`;
