@@ -2,39 +2,53 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Giá Cà Phê & Giá Tiêu</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 20px;
+      }
+      h1, h2 {
+        font-size: 1.8em;
+      }
+      table th, table td {
+        font-size: 1.2em;
+      }
+    }
+  </style>
 </head>
+  
 <body>
   <h1>🌱 Giá Cà Phê & Giá Tiêu Hôm Nay 🌱</h1>
 
-  <div class="section" id="caphe">
-    <h2>☕ Cà Phê</h2>
-    <div id="giaCaPhe">Đang tải giá cà phê...</div>
+<div class="section" id="caphe">
+  <h2>☕ Cà Phê</h2>
 
-    <!-- 🌟 Thêm bảng giá cà phê Đắk Nông -->
-    <div id="bangGiaDakNong" style="margin-top: 2rem;">
-      <h2 style="font-size: 1.5rem; font-weight: bold; text-align: center;">Giá cà phê Đắk Nông hôm nay</h2>
-      <div style="overflow-x: auto; margin-top: 1rem;">
-        <table style="width: 100%; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
-          <thead style="background-color: #f5e8d7;">
-            <tr>
-              <th style="padding: 1rem; text-align: left;">Khu Vực</th>
-              <th style="padding: 1rem; text-align: right;">Giá Mua (VNĐ/kg)</th>
-              <th style="padding: 1rem; text-align: right;">Thay Đổi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="background-color: #ffffff;">
-              <td style="padding: 1rem;">Đắk Nông</td>
-              <td id="giaDakNong" style="padding: 1rem; text-align: right;">Đang tải...</td>
-              <td id="thayDoiDakNong" style="padding: 1rem; text-align: right;">Đang tải...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- 🌟 End bảng giá cà phê Đắk Nông -->
+  <div style="overflow-x: auto; margin-top: 1rem;">
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+      <thead style="background-color: #f5e8d7;">
+        <tr>
+          <th style="padding: 1rem; text-align: left;">Khu Vực</th>
+          <th style="padding: 1rem; text-align: right;">Giá Mua (VNĐ/kg)</th>
+          <th style="padding: 1rem; text-align: right;">Thay Đổi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #ffffff;">
+          <td>Đắk Nông</td>
+          <td id="giaDakNong" style="padding: 1rem; text-align: right;">Đang tải...</td>
+          <td id="thayDoiDakNong" style="padding: 1rem; text-align: right;">Đang tải...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
   </div>
 
@@ -45,44 +59,37 @@
 
   <script src="script-hoa-roi.js"></script>
   <script>
-    async function loadGia() {
-      try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
-        const data = await response.json();
+async function loadGia() {
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
+    const data = await response.json();
 
-        // Giá cà phê chung
-        const cp = data.caphe;
-        let cpHTML = `Ngày: ${cp.ngay}<br>💰 Giá: ${cp.gia.toLocaleString('vi-VN')} VNĐ/kg<br>`;
-        if (cp.thaydoi > 0) cpHTML += `📈 Tăng: ${cp.thaydoi.toLocaleString('vi-VN')} VNĐ/kg`;
-        else if (cp.thaydoi < 0) cpHTML += `📉 Giảm: ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')} VNĐ/kg`;
-        else cpHTML += `➖ Không đổi`;
-        document.getElementById('giaCaPhe').innerHTML = cpHTML;
+    // 🌟 Update bảng giá Đắk Nông
+    const cp = data.caphe;
+    document.getElementById('giaDakNong').innerText = cp.gia.toLocaleString('vi-VN');
+    document.getElementById('thayDoiDakNong').innerHTML = 
+      cp.thaydoi > 0 ? `<span style="color: green;">+${cp.thaydoi.toLocaleString('vi-VN')}</span>` :
+      cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
+      `<span style="color: gray;">0</span>`;
 
-        // 🌟 Update bảng giá Đắk Nông
-        document.getElementById('giaDakNong').innerText = cp.gia.toLocaleString('vi-VN');
-        document.getElementById('thayDoiDakNong').innerHTML = 
-          cp.thaydoi > 0 ? `<span style="color: green;">+${cp.thaydoi.toLocaleString('vi-VN')}</span>` :
-          cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
-          `<span style="color: purple;">0</span>`;
+    // 🌰 Update giá tiêu
+    const tieu = data.tieu;
+    let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
+    tieu.data.forEach(item => {
+      let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` : 
+                  item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `🟰 0`;
+      tieuHTML += `<tr><td>${item.khuVuc}</td><td>${item.giaMua.toLocaleString('vi-VN')}</td><td>${change}</td></tr>`;
+    });
+    tieuHTML += `</table>`;
+    document.getElementById('giaTieu').innerHTML = tieuHTML;
 
-        // Giá tiêu
-        const tieu = data.tieu;
-        let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
-        tieu.data.forEach(item => {
-          let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` : 
-                      item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `🟰 0`;
-          tieuHTML += `<tr><td>${item.khuVuc}</td><td>${item.giaMua.toLocaleString('vi-VN')}</td><td>${change}</td></tr>`;
-        });
-        tieuHTML += `</table>`;
-        document.getElementById('giaTieu').innerHTML = tieuHTML;
-
-      } catch (error) {
-        document.getElementById('giaCaPhe').innerHTML = "🚫 Không lấy được giá.";
-        document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
-        console.error('Error:', error);
-      }
-    }
-
+  } catch (error) {
+    console.error('Error:', error);
+    document.getElementById('giaDakNong').innerText = "🚫 Lỗi";
+    document.getElementById('thayDoiDakNong').innerText = "🚫 Lỗi";
+    document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
+  }
+}
     loadGia();
     const reloadTime = 30000; // 30 giây
     setInterval(loadGia, reloadTime);
