@@ -57,3 +57,16 @@ td {
         font-size: 14px;
     }
 }
+
+.hoa {
+    position: fixed;
+    top: -10px;
+    color: pink;
+    animation: roiXuống linear infinite;
+    z-index: 9999;
+}
+
+@keyframes roiXuống {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+}
