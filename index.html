@@ -113,7 +113,7 @@
 
   <script src="script-hoa-roi.js"></script>
   <script>
-  
+
     async function loadGia() {
   try {
     const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
@@ -127,15 +127,13 @@
       cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
       `<span style="color: gray;">0</span>`;
 
-    // Cập nhật ngày giờ cho cà phê
+    // Cập nhật ngày cà phê
     const capheDate = new Date(cp.ngay);
     if (capheDate.getTime()) {  // Kiểm tra nếu ngày hợp lệ
       const formattedCapheDate = `${capheDate.getDate()}/${capheDate.getMonth() + 1}/${capheDate.getFullYear()}`;
-      document.getElementById('capheDate').innerText = `Giá cà phê hôm nay ngày ${formattedCapheDate}`;
-      document.getElementById('capheUpdated').innerText = `Cập nhật lúc: ${capheDate.toLocaleTimeString('vi-VN')}`;
+      document.getElementById('capheDate').innerText = `☕ Giá cà phê hôm nay ngày ${formattedCapheDate}`;
     } else {
-      document.getElementById('capheUpdated').innerText = "Cập nhật lúc: Không xác định";
-      document.getElementById('capheDate').innerText = "Giá cà phê hôm nay ngày: Không xác định";
+      document.getElementById('capheDate').innerText = "☕ Giá cà phê hôm nay ngày: Không xác định";
     }
 
     // 🌰 Update giá tiêu
@@ -149,15 +147,13 @@
     tieuHTML += `</table>`;
     document.getElementById('giaTieu').innerHTML = tieuHTML;
 
-    // Cập nhật ngày giờ cho tiêu
+    // Cập nhật ngày tiêu
     const tieuDate = new Date(tieu.ngay);
     if (tieuDate.getTime()) {  // Kiểm tra nếu ngày hợp lệ
       const formattedTieuDate = `${tieuDate.getDate()}/${tieuDate.getMonth() + 1}/${tieuDate.getFullYear()}`;
-      document.getElementById('tieuDate').innerText = `Giá tiêu hôm nay ngày ${formattedTieuDate}`;
-      document.getElementById('tieuUpdated').innerText = `Cập nhật lúc: ${tieuDate.toLocaleTimeString('vi-VN')}`;
+      document.getElementById('tieuDate').innerText = `🌰 Giá tiêu hôm nay ngày ${formattedTieuDate}`;
     } else {
-      document.getElementById('tieuUpdated').innerText = "Cập nhật lúc: Không xác định";
-      document.getElementById('tieuDate').innerText = "Giá tiêu hôm nay ngày: Không xác định";
+      document.getElementById('tieuDate').innerText = "🌰 Giá tiêu hôm nay ngày: Không xác định";
     }
 
   } catch (error) {
@@ -165,14 +161,11 @@
     document.getElementById('giaDakNong').innerText = "🚫 Lỗi";
     document.getElementById('thayDoiDakNong').innerText = "🚫 Lỗi";
     document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
-    document.getElementById('capheUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
-    document.getElementById('tieuUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
-    document.getElementById('capheDate').innerText = "🚫 Lỗi lấy ngày cà phê";
-    document.getElementById('tieuDate').innerText = "🚫 Lỗi lấy ngày tiêu";
+    document.getElementById('capheDate').innerText = "☕ Giá cà phê hôm nay ngày: Không xác định";
+    document.getElementById('tieuDate').innerText = "🌰 Giá tiêu hôm nay ngày: Không xác định";
   }
 }
-
-
+    
     loadGia();
     const reloadTime = 100; // 1 giây
     setInterval(loadGia, reloadTime);
