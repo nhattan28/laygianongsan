@@ -60,6 +60,12 @@
       margin-bottom: 20px; /* Khoảng cách dưới */
     }
 
+    .date-updated {
+      text-align: center;
+      font-size: 1rem;
+      color: gray;
+      margin-top: 10px;
+    }
   </style>
 </head>
   
@@ -67,7 +73,7 @@
   <h1>🌱 Giá Cà Phê & Giá Tiêu Hôm Nay 🌱</h1>
 
   <div class="section" id="caphe">
-    <h3 id="capheDate">☕ Giá Cà Phê Hôm Nay Ngày</h3>
+    <h2 id="capheDate">☕ Giá Cà Phê Hôm Nay</h2>
     <div style="overflow-x: auto; margin-top: 1rem;">
       <table>
         <thead>
@@ -86,34 +92,17 @@
         </tbody>
       </table>
     </div>
+    <div id="capheUpdated" class="date-updated">Đang tải ngày giờ cập nhật...</div>
   </div>
 
   <div class="section" id="tieu">
-    <h3 id="tieuDate">🌰 Giá Tiêu Hôm Nay Ngày</h3>
+    <h2 id="tieuDate">🌰 Giá Tiêu Hôm Nay</h2>
     <div id="giaTieu">Đang tải giá tiêu...</div>
+    <div id="tieuUpdated" class="date-updated">Đang tải ngày giờ cập nhật...</div>
   </div>
 
   <script src="script-hoa-roi.js"></script>
   <script>
-    // Hàm lấy ngày hiện tại
-    function getCurrentDate() {
-      const today = new Date();
-      const day = today.getDate();
-      const month = today.getMonth() + 1; // Tháng bắt đầu từ 0
-      const year = today.getFullYear();
-      return `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
-    }
-
-    // Cập nhật ngày vào tiêu đề
-    function updateTitles() {
-      const currentDate = getCurrentDate();
-      document.getElementById('capheDate').innerHTML = `☕ Giá Cà Phê Hôm Nay Ngày ${currentDate}`;
-      document.getElementById('tieuDate').innerHTML = `🌰 Giá Tiêu Hôm Nay Ngày ${currentDate}`;
-    }
-
-    // Gọi hàm để cập nhật ngày khi trang tải
-    updateTitles();
-
     async function loadGia() {
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
@@ -127,6 +116,9 @@
           cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
           `<span style="color: gray;">0</span>`;
 
+        // Cập nhật ngày giờ cho cà phê
+        document.getElementById('capheUpdated').innerText = `Cập nhật lúc: ${cp.ngayCapNhat}`;
+
         // 🌰 Update giá tiêu
         const tieu = data.tieu;
         let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
@@ -138,11 +130,16 @@
         tieuHTML += `</table>`;
         document.getElementById('giaTieu').innerHTML = tieuHTML;
 
+        // Cập nhật ngày giờ cho tiêu
+        document.getElementById('tieuUpdated').innerText = `Cập nhật lúc: ${tieu.ngayCapNhat}`;
+
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('giaDakNong').innerText = "🚫 Lỗi";
         document.getElementById('thayDoiDakNong').innerText = "🚫 Lỗi";
         document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
+        document.getElementById('capheUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
+        document.getElementById('tieuUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
       }
     }
 
