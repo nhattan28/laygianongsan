@@ -52,7 +52,7 @@
       margin-bottom: 20px; /* Khoảng cách dưới */
     }
 
-    #giaTieu {
+    #giaTieu, #giaCaphe {
       text-align: center; /* Căn giữa nội dung tiêu đề */
       font-weight: bold; /* Làm chữ đậm */
       font-size: 1.2em; /* Cỡ chữ lớn hơn một chút */
@@ -66,6 +66,12 @@
       color: gray;
       margin-top: 10px;
     }
+
+    #tieuDate, #capheDate {
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
   </style>
 </head>
   
@@ -73,7 +79,7 @@
   <h1>🌱 Giá Cà Phê & Giá Tiêu Hôm Nay 🌱</h1>
 
   <div class="section" id="caphe">
-    <h2 id="capheDate">☕ Giá Cà Phê Hôm Nay</h2>
+    <h2>☕ Giá Cà Phê Hôm Nay</h2>
     <div style="overflow-x: auto; margin-top: 1rem;">
       <table>
         <thead>
@@ -93,12 +99,16 @@
       </table>
     </div>
     <div id="capheUpdated" class="date-updated">Đang tải ngày giờ cập nhật...</div>
+    <!-- Hiển thị ngày cho giá cà phê -->
+    <div id="capheDate" class="date-updated">Giá cà phê hôm nay ngày ...</div>
   </div>
 
   <div class="section" id="tieu">
-    <h2 id="tieuDate">🌰 Giá Tiêu Hôm Nay</h2>
+    <h2>🌰 Giá Tiêu Hôm Nay</h2>
     <div id="giaTieu">Đang tải giá tiêu...</div>
     <div id="tieuUpdated" class="date-updated">Đang tải ngày giờ cập nhật...</div>
+    <!-- Hiển thị ngày cho giá tiêu -->
+    <div id="tieuDate" class="date-updated">Giá tiêu hôm nay ngày ...</div>
   </div>
 
   <script src="script-hoa-roi.js"></script>
@@ -119,6 +129,11 @@
         // Cập nhật ngày giờ cho cà phê
         document.getElementById('capheUpdated').innerText = `Cập nhật lúc: ${cp.ngayCapNhat}`;
 
+        // Lấy ngày cập nhật cà phê
+        const capheDate = new Date(cp.ngayCapNhat);
+        const formattedCapheDate = `${capheDate.getDate()}/${capheDate.getMonth() + 1}/${capheDate.getFullYear()}`;
+        document.getElementById('capheDate').innerText = `Giá cà phê hôm nay ngày ${formattedCapheDate}`;
+
         // 🌰 Update giá tiêu
         const tieu = data.tieu;
         let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
@@ -133,6 +148,11 @@
         // Cập nhật ngày giờ cho tiêu
         document.getElementById('tieuUpdated').innerText = `Cập nhật lúc: ${tieu.ngayCapNhat}`;
 
+        // Lấy ngày cập nhật tiêu
+        const tieuDate = new Date(tieu.ngayCapNhat);
+        const formattedTieuDate = `${tieuDate.getDate()}/${tieuDate.getMonth() + 1}/${tieuDate.getFullYear()}`;
+        document.getElementById('tieuDate').innerText = `Giá tiêu hôm nay ngày ${formattedTieuDate}`;
+
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('giaDakNong').innerText = "🚫 Lỗi";
@@ -140,11 +160,13 @@
         document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
         document.getElementById('capheUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
         document.getElementById('tieuUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
+        document.getElementById('capheDate').innerText = "🚫 Lỗi lấy ngày cà phê";
+        document.getElementById('tieuDate').innerText = "🚫 Lỗi lấy ngày tiêu";
       }
     }
 
     loadGia();
-    const reloadTime = 1000; // 1 giây
+    const reloadTime = 100; // 1 giây
     setInterval(loadGia, reloadTime);
   </script>
 </body>
