@@ -11,6 +11,31 @@
   <div class="section" id="caphe">
     <h2>☕ Cà Phê</h2>
     <div id="giaCaPhe">Đang tải giá cà phê...</div>
+
+    <!-- 🌟 Thêm bảng giá cà phê Đắk Nông -->
+    <div id="bangGiaDakNong" style="margin-top: 2rem;">
+      <h2 style="font-size: 1.5rem; font-weight: bold; text-align: center;">Giá cà phê Đắk Nông hôm nay</h2>
+      <div style="overflow-x: auto; margin-top: 1rem;">
+        <table style="width: 100%; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+          <thead style="background-color: #f5e8d7;">
+            <tr>
+              <th style="padding: 1rem; text-align: left;">Khu Vực</th>
+              <th style="padding: 1rem; text-align: right;">Giá Mua (VNĐ/kg)</th>
+              <th style="padding: 1rem; text-align: right;">Thay Đổi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background-color: #ffffff;">
+              <td style="padding: 1rem;">Đắk Nông</td>
+              <td id="giaDakNong" style="padding: 1rem; text-align: right;">Đang tải...</td>
+              <td id="thayDoiDakNong" style="padding: 1rem; text-align: right;">Đang tải...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- 🌟 End bảng giá cà phê Đắk Nông -->
+
   </div>
 
   <div class="section" id="tieu">
@@ -25,6 +50,7 @@
         const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
         const data = await response.json();
 
+        // Giá cà phê chung
         const cp = data.caphe;
         let cpHTML = `Ngày: ${cp.ngay}<br>💰 Giá: ${cp.gia.toLocaleString('vi-VN')} VNĐ/kg<br>`;
         if (cp.thaydoi > 0) cpHTML += `📈 Tăng: ${cp.thaydoi.toLocaleString('vi-VN')} VNĐ/kg`;
@@ -32,6 +58,14 @@
         else cpHTML += `➖ Không đổi`;
         document.getElementById('giaCaPhe').innerHTML = cpHTML;
 
+        // 🌟 Update bảng giá Đắk Nông
+        document.getElementById('giaDakNong').innerText = cp.gia.toLocaleString('vi-VN');
+        document.getElementById('thayDoiDakNong').innerHTML = 
+          cp.thaydoi > 0 ? `<span style="color: green;">+${cp.thaydoi.toLocaleString('vi-VN')}</span>` :
+          cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
+          `<span style="color: purple;">0</span>`;
+
+        // Giá tiêu
         const tieu = data.tieu;
         let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
         tieu.data.forEach(item => {
@@ -50,8 +84,8 @@
     }
 
     loadGia();
-  const reloadTime = 30000; // 30 giây
-  setInterval(loadGia, reloadTime);
+    const reloadTime = 30000; // 30 giây
+    setInterval(loadGia, reloadTime);
   </script>
 </body>
 </html>
