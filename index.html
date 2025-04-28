@@ -94,9 +94,9 @@
         // Cà phê
         const cp = data.caphe;
         let cpHTML = `Ngày: ${cp.ngay}<br>💰 Giá: ${cp.gia.toLocaleString('vi-VN')} VNĐ/kg<br>`;
-        if (cp.thaydoi > 0) cpHTML += `📈 Tăng: ${cp.thaydoi.toLocaleString('vi-VN')} VNĐ/kg`;
-        else if (cp.thaydoi < 0) cpHTML += `📉 Giảm: ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')} VNĐ/kg`;
-        else cpHTML += `➖ Không đổi`;
+        if (cp.thaydoi > 0) cpHTML += `➕ Tăng: ${cp.thaydoi.toLocaleString('vi-VN')} VNĐ/kg`;
+        else if (cp.thaydoi < 0) cpHTML += `➖ Giảm: ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')} VNĐ/kg`;
+        else cpHTML += ` Không đổi`;
         document.getElementById('giaCaPhe').innerHTML = cpHTML;
 
         // Tiêu
