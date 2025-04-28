@@ -113,57 +113,65 @@
 
   <script src="script-hoa-roi.js"></script>
   <script>
+  
     async function loadGia() {
-      try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
-        const data = await response.json();
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
+    const data = await response.json();
 
-        // 🌟 Update bảng giá Đắk Nông
-        const cp = data.caphe;
-        document.getElementById('giaDakNong').innerText = cp.gia.toLocaleString('vi-VN');
-        document.getElementById('thayDoiDakNong').innerHTML = 
-          cp.thaydoi > 0 ? `<span style="color: green;">+${cp.thaydoi.toLocaleString('vi-VN')}</span>` :
-          cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
-          `<span style="color: gray;">0</span>`;
+    // 🌟 Update bảng giá Đắk Nông
+    const cp = data.caphe;
+    document.getElementById('giaDakNong').innerText = cp.gia.toLocaleString('vi-VN');
+    document.getElementById('thayDoiDakNong').innerHTML = 
+      cp.thaydoi > 0 ? `<span style="color: green;">+${cp.thaydoi.toLocaleString('vi-VN')}</span>` :
+      cp.thaydoi < 0 ? `<span style="color: red;">-${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}</span>` :
+      `<span style="color: gray;">0</span>`;
 
-        // Cập nhật ngày giờ cho cà phê
-        document.getElementById('capheUpdated').innerText = `Cập nhật lúc: ${cp.ngayCapNhat}`;
-
-        // Lấy ngày cập nhật cà phê
-        const capheDate = new Date(cp.ngayCapNhat);
-        const formattedCapheDate = `${capheDate.getDate()}/${capheDate.getMonth() + 1}/${capheDate.getFullYear()}`;
-        document.getElementById('capheDate').innerText = `Giá cà phê hôm nay ngày ${formattedCapheDate}`;
-
-        // 🌰 Update giá tiêu
-        const tieu = data.tieu;
-        let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
-        tieu.data.forEach(item => {
-          let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` : 
-                      item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `🟰 0`;
-          tieuHTML += `<tr><td>${item.khuVuc}</td><td>${item.giaMua.toLocaleString('vi-VN')}</td><td>${change}</td></tr>`;
-        });
-        tieuHTML += `</table>`;
-        document.getElementById('giaTieu').innerHTML = tieuHTML;
-
-        // Cập nhật ngày giờ cho tiêu
-        document.getElementById('tieuUpdated').innerText = `Cập nhật lúc: ${tieu.ngayCapNhat}`;
-
-        // Lấy ngày cập nhật tiêu
-        const tieuDate = new Date(tieu.ngayCapNhat);
-        const formattedTieuDate = `${tieuDate.getDate()}/${tieuDate.getMonth() + 1}/${tieuDate.getFullYear()}`;
-        document.getElementById('tieuDate').innerText = `Giá tiêu hôm nay ngày ${formattedTieuDate}`;
-
-      } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('giaDakNong').innerText = "🚫 Lỗi";
-        document.getElementById('thayDoiDakNong').innerText = "🚫 Lỗi";
-        document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
-        document.getElementById('capheUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
-        document.getElementById('tieuUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
-        document.getElementById('capheDate').innerText = "🚫 Lỗi lấy ngày cà phê";
-        document.getElementById('tieuDate').innerText = "🚫 Lỗi lấy ngày tiêu";
-      }
+    // Cập nhật ngày giờ cho cà phê
+    const capheDate = new Date(cp.ngay);
+    if (capheDate.getTime()) {  // Kiểm tra nếu ngày hợp lệ
+      const formattedCapheDate = `${capheDate.getDate()}/${capheDate.getMonth() + 1}/${capheDate.getFullYear()}`;
+      document.getElementById('capheDate').innerText = `Giá cà phê hôm nay ngày ${formattedCapheDate}`;
+      document.getElementById('capheUpdated').innerText = `Cập nhật lúc: ${capheDate.toLocaleTimeString('vi-VN')}`;
+    } else {
+      document.getElementById('capheUpdated').innerText = "Cập nhật lúc: Không xác định";
+      document.getElementById('capheDate').innerText = "Giá cà phê hôm nay ngày: Không xác định";
     }
+
+    // 🌰 Update giá tiêu
+    const tieu = data.tieu;
+    let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua (VNĐ/kg)</th><th>Thay Đổi</th></tr>`;
+    tieu.data.forEach(item => {
+      let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` : 
+                  item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `🟰 0`;
+      tieuHTML += `<tr><td>${item.khuVuc}</td><td>${item.giaMua.toLocaleString('vi-VN')}</td><td>${change}</td></tr>`;
+    });
+    tieuHTML += `</table>`;
+    document.getElementById('giaTieu').innerHTML = tieuHTML;
+
+    // Cập nhật ngày giờ cho tiêu
+    const tieuDate = new Date(tieu.ngay);
+    if (tieuDate.getTime()) {  // Kiểm tra nếu ngày hợp lệ
+      const formattedTieuDate = `${tieuDate.getDate()}/${tieuDate.getMonth() + 1}/${tieuDate.getFullYear()}`;
+      document.getElementById('tieuDate').innerText = `Giá tiêu hôm nay ngày ${formattedTieuDate}`;
+      document.getElementById('tieuUpdated').innerText = `Cập nhật lúc: ${tieuDate.toLocaleTimeString('vi-VN')}`;
+    } else {
+      document.getElementById('tieuUpdated').innerText = "Cập nhật lúc: Không xác định";
+      document.getElementById('tieuDate').innerText = "Giá tiêu hôm nay ngày: Không xác định";
+    }
+
+  } catch (error) {
+    console.error('Error:', error);
+    document.getElementById('giaDakNong').innerText = "🚫 Lỗi";
+    document.getElementById('thayDoiDakNong').innerText = "🚫 Lỗi";
+    document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
+    document.getElementById('capheUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
+    document.getElementById('tieuUpdated').innerText = "🚫 Lỗi lấy ngày giờ cập nhật";
+    document.getElementById('capheDate').innerText = "🚫 Lỗi lấy ngày cà phê";
+    document.getElementById('tieuDate').innerText = "🚫 Lỗi lấy ngày tiêu";
+  }
+}
+
 
     loadGia();
     const reloadTime = 100; // 1 giây
