@@ -2,33 +2,49 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Giá Cà Phê & Giá Tiêu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giá Nông Sản</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
-      background: #fff7e6;
-      color: #4b2e2e;
-      text-align: center;
+    * {
+      box-sizing: border-box;
     }
 
-    h1, h2 {
+body {
+  font-family: 'Quicksand', 'Segoe UI', sans-serif;
+  margin: 0;
+padding: 5px 0 0 0; /* chỉ padding trên 10px */
+  background: linear-gradient(to right, #fff7e6, #ffffff);
+  color: #4b2e2e;
+  text-align: center;
+}
+
+
+    h1, h2{
       color: #6b4226;
-      margin: 0.5rem 0;
+  margin: 0.5rem 0;
     }
+
+  h3 {
+    margin: 2px 0 4px 0;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: auto;
+    color: #6b4226;
+  }
 
     .section {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
-    table {
-      width: 100%;
-      max-width: 800px;
-      margin: 20px auto;
-      border-collapse: collapse;
-      font-size: 18px;
-    }
+  table {
+    width: 100%;
+    max-width: 800px;
+    margin: 4px auto 10px auto; /* Giảm khoảng cách trên xuống 4px */
+    border-collapse: collapse;
+    font-size: 18px;
+  }
+
 
     th, td {
       border: 1px solid #ccc;
@@ -41,15 +57,34 @@
       font-weight: bold;
     }
 
-    .updated {
-      font-size: 14px;
-      color: #888;
-      margin-top: 5px;
+  .container {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .icon {
+    font-size: 50px;
+    color: #3498db;
+    margin-bottom: 10px;
+   }
+
+    .label {
+      font-weight: 600;
+      color: #2c3e50;
     }
+
+  .time {
+    font-size: 18px;
+    font-weight: bold;
+  
+    display: inline-block;
+    width: auto;
+    height: auto;
+  }
 
     @media screen and (max-width: 600px) {
       h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
 
       h2 {
@@ -62,25 +97,55 @@
       }
 
       th, td {
-        padding: 12px;
+        padding: 16px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .time {
+        font-size: 16px;
+      }
+
+      .icon {
+        font-size: 36px;
       }
     }
   </style>
 </head>
 <body>
-    <h2>🌱 GIÁ HÔM NAY 🌱</h2>
-
+  <h3>🌾 Cập Nhật Giá Nông Sản 🌾</h3>
+  <!-- Lịch âm dương -->
+  <div class="container">
+<table class="time-table">
+  <tr>
+    <td colspan="2">
+📅<span id="thu">Đang tải...</span> ⏰ <span id="clock" class="time">--:--:--</span>
+    </td>
+  </tr>
+  <tr>
+    <th>📆 Ngày Dương</th>
+    <th>📅 Ngày Âm Lịch</th>
+  </tr>
+  <tr>
+    <td><span id="ngayDuong">Đang tải...</span></td>
+    <td><span id="ngayAmLich">Đang tải...</span></td>
+  </tr>
+</table>
+  
+  <!-- Giá cà phê -->
   <div class="section" id="caphe">
-    <h2>☕ Cà Phê</h2>
     <div id="giaCaPhe">Đang tải giá cà phê...</div>
   </div>
 
+  <!-- Giá tiêu -->
   <div class="section" id="tieu">
-    <h2>🌰 Tiêu</h2>
     <div id="giaTieu">Đang tải giá tiêu...</div>
   </div>
 
   <script>
+    // Lấy giá cà phê & tiêu
     async function loadGia() {
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
@@ -88,22 +153,17 @@
 
         // Cà phê
         const cp = data.caphe;
-        let cpTable = `<b> Giá cà phê hôm nay ngày ${cp.ngay}</b><br>`;
+        let cpTable = `<b>Giá cà phê hôm nay ngày ${cp.ngay}</b><br>`;
         cpTable += `
           <table>
-            <tr>
-              <th>Khu vực</th>
-              <th>Giá</th>
-              <th>Thay đổi</th>
-            </tr>
+            <tr><th>Khu vực</th><th>Giá</th><th>Thay đổi</th></tr>
             <tr>
               <td>Đắk Nông</td>
               <td>${cp.gia.toLocaleString('vi-VN')}</td>
               <td>${cp.thaydoi > 0 ? `➕ ${cp.thaydoi.toLocaleString('vi-VN')}` :
                    cp.thaydoi < 0 ? `➖ ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}` : `Không đổi`}</td>
             </tr>
-          </table>
-        `;
+          </table>`;
         document.getElementById('giaCaPhe').innerHTML = cpTable;
 
         // Tiêu
@@ -114,6 +174,7 @@
                       item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `Không đổi`;
           tieuHTML += `<tr><td>${item.khuVuc}</td><td>${item.giaMua.toLocaleString('vi-VN')}</td><td>${change}</td></tr>`;
         });
+        tieuHTML += `</table>`;
         document.getElementById('giaTieu').innerHTML = tieuHTML;
 
       } catch (error) {
@@ -125,6 +186,41 @@
 
     loadGia();
     setInterval(loadGia, 300000); // Cập nhật mỗi 5 phút
+
+    // Cập nhật thời gian thực
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('clock').textContent = timeString;
+
+      const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      document.getElementById('thu').textContent = weekdays[now.getDay()];
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Gọi API lấy lịch âm dương
+    function getLichAmDuong() {
+      const url = 'https://script.google.com/macros/s/AKfycbwmwE8vXEAr0nLBi6foKJexM6W9ZHu2qsXPhHQ763sx-lD3KawlTh4VFUzO4HO1SDk/exec';
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('ngayDuong').textContent = data.ngayDuong || 'Không rõ';
+          document.getElementById('ngayAmLich').textContent = data.ngayAmLich || 'Không rõ';
+        })
+        .catch(error => {
+          document.getElementById('ngayDuong').textContent = 'Lỗi';
+          document.getElementById('ngayAmLich').textContent = 'Lỗi';
+          console.error('Lỗi lấy lịch:', error);
+        });
+    }
+
+    getLichAmDuong();
   </script>
 </body>
 </html>
