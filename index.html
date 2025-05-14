@@ -22,7 +22,7 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 
     h1, h2{
       color: #6b4226;
-  margin: 0.5rem 0;
+  margin: 0.2rem 0;
     }
 
   h3 {
@@ -34,21 +34,21 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
   }
 
     .section {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
   table {
     width: 100%;
     max-width: 800px;
-    margin: 4px auto 10px auto; /* Giảm khoảng cách trên xuống 4px */
+    margin: 2px auto 10px auto; /* Giảm khoảng cách trên xuống 4px */
     border-collapse: collapse;
-    font-size: 18px;
+    font-size: 16px;
   }
 
 
     th, td {
       border: 1px solid #ccc;
-      padding: 8px;
+      padding: 4px;
       text-align: center;
     }
 
@@ -69,7 +69,7 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
    }
 
     .label {
-      font-weight: 600;
+      font-weight: auto;
       color: #2c3e50;
     }
 
@@ -82,26 +82,26 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
     height: auto;
   }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 500px) {
       h1 {
-        font-size: 1.8rem;
+        font-size: 1rem;
       }
 
       h2 {
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
 
       table {
         width: 90%;
-        font-size: 16px;
+        font-size: 14px;
       }
 
       th, td {
-        padding: 16px;
+        padding: 14px;
       }
 
       .container {
-        padding: 20px;
+        padding: 10px;
       }
 
       .time {
@@ -168,7 +168,7 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 
         // Tiêu
         const tieu = data.tieu;
-        let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá Mua</th><th>Thay Đổi</th></tr>`;
+        let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá</th><th>Thay Đổi</th></tr>`;
         tieu.data.forEach(item => {
           let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` :
                       item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `Không đổi`;
