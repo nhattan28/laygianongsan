@@ -121,12 +121,12 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 <table class="time-table">
   <tr>
     <td colspan="2">
-📅<span id="thu">Đang tải...</span> ⏰ <span id="clock" class="time">--:--:--</span>
+<span id="thu">Đang tải...</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="clock" class="time">--:--:--</span>
     </td>
   </tr>
   <tr>
-    <th>📆 Ngày Dương</th>
-    <th>📅 Ngày Âm Lịch</th>
+    <th>Dương lịch</th>
+    <th>Âm Lịch</th>
   </tr>
   <tr>
     <td><span id="ngayDuong">Đang tải...</span></td>
@@ -153,7 +153,7 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 
         // Cà phê
         const cp = data.caphe;
-        let cpTable = `<b>Giá cà phê hôm nay ngày ${cp.ngay}</b><br>`;
+        let cpTable = `<b>Giá cà phê ngày ${cp.ngay}</b><br>`;
         cpTable += `
           <table>
             <tr><th>Khu vực</th><th>Giá</th><th>Thay đổi</th></tr>
@@ -168,7 +168,7 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 
         // Tiêu
         const tieu = data.tieu;
-        let tieuHTML = `<b>${tieu.tieuDe}</b><br><table><tr><th>Khu Vực</th><th>Giá</th><th>Thay Đổi</th></tr>`;
+        let tieuHTML = `<b>${tieu.tieuDe.replace("hôm nay ", "")}</b><br><table><tr><th>Khu Vực</th><th>Giá</th><th>Thay Đổi</th></tr>`;
         tieu.data.forEach(item => {
           let change = item.thayDoi > 0 ? `➕ ${item.thayDoi.toLocaleString('vi-VN')}` :
                       item.thayDoi < 0 ? `➖ ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `Không đổi`;
