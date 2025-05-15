@@ -134,6 +134,10 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
     <td><span id="ngayDuong">Đang tải...</span></td>
     <td><span id="ngayAmLich">Đang tải...</span></td>
   </tr>
+<td colspan="3">
+    <span id="ngayDacBiet"></span>
+
+    </td>
 </table>
   
   <!-- Giá cà phê -->
@@ -165,8 +169,10 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
               <td>${cp.thaydoi > 0 ? `➕ ${cp.thaydoi.toLocaleString('vi-VN')}` :
                    cp.thaydoi < 0 ? `➖ ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}` : `Không đổi`}</td>
             </tr>
+            <div id="dongThongBao" style="margin-top: 5px; font-weight: bold; color: #d35400;"></div>
           </table>`;
         document.getElementById('giaCaPhe').innerHTML = cpTable;
+
 
         // Tiêu
         const tieu = data.tieu;
@@ -207,17 +213,19 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 
     // Gọi API lấy lịch âm dương
     function getLichAmDuong() {
-      const url = 'https://script.google.com/macros/s/AKfycbwmwE8vXEAr0nLBi6foKJexM6W9ZHu2qsXPhHQ763sx-lD3KawlTh4VFUzO4HO1SDk/exec';
+      const url = 'https://script.google.com/macros/s/AKfycbzk1k3wh6KS0B3yDJzZm07HTYgmkP6sGd0HzhAjN5Kh3bGlFJgRRa93aFHzdNCOP1fz/exec';
 
       fetch(url)
         .then(response => response.json())
         .then(data => {
           document.getElementById('ngayDuong').textContent = data.ngayDuong || 'Không rõ';
           document.getElementById('ngayAmLich').textContent = data.ngayAmLich || 'Không rõ';
+          document.getElementById('ngayDacBiet').textContent = data.ngayDacBiet || 'Không rõ';
         })
         .catch(error => {
           document.getElementById('ngayDuong').textContent = 'Lỗi';
           document.getElementById('ngayAmLich').textContent = 'Lỗi';
+          document.getElementById('ngayDacBiet').textContent = 'Lỗi';
           console.error('Lỗi lấy lịch:', error);
         });
     }
