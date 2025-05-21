@@ -67,11 +67,10 @@
         // Lấy dữ liệu cũ từ localStorage
         let duLieuLichSu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
 
-        // Kiểm tra xem ngày hiện tại đã tồn tại chưa
-        const ngayDaTonTai = duLieuLichSu.some(item => item.ngay === ngayHienTai.ngay);
-
-        // Nếu ngày chưa tồn tại, thêm vào đầu mảng
-        if (!ngayDaTonTai) {
+        // Kiểm tra xem ngày cuối cùng trong danh sách có trùng với ngày từ API không
+        const ngayCuoiCung = duLieuLichSu.length > 0 ? duLieuLichSu[0].ngay : null;
+        if (ngayCuoiCung !== ngayHienTai.ngay) {
+          // Nếu ngày khác, thêm dữ liệu mới vào đầu mảng
           duLieuLichSu.unshift({
             ngay: ngayHienTai.ngay,
             gia: ngayHienTai.gia,
