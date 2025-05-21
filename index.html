@@ -79,6 +79,26 @@ body {
     height: auto;
   }
 
+    /* Thêm style cho liên kết nằm ngang */
+    .link-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* Khoảng cách giữa hai liên kết */
+      margin: 10px 0;
+    }
+
+    .link-container a {
+      display: inline-block;
+      margin: 0;
+      font-weight: bold;
+      color: #c0392b;
+      text-decoration: none;
+    }
+
+    .link-container a:hover {
+      text-decoration: underline;
+    }
+
     @media screen and (max-width: 500px) {
       h1 {
         font-size: 1rem;
@@ -108,6 +128,11 @@ body {
       .icon {
         font-size: 36px;
       }
+
+      .link-container {
+        flex-direction: column; /* Chuyển thành dọc trên màn hình nhỏ */
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -119,6 +144,7 @@ body {
   <tr>
     <td colspan="3">
       <span id="clock" class="time">--:--:--</span>
+      <span id="timezone" class="time" style="font-size: 14px; margin-left: 10px;">(Đang tải...)</span>
     </td>
   </tr>
   <tr>
@@ -147,9 +173,10 @@ body {
   <div class="section" id="tieu">
     <div id="giaTieu">Đang tải giá tiêu...</div>
   </div>
-
-  <a href="bieudo.html" style="display:block;margin:10px;font-weight:bold;color:#c0392b;">📈Bảng giá</a>
-  <a href="bieudogia.html" style="display:block;margin:10px;font-weight:bold;color:#c0392b;">📊Biểu đồ</a>
+  <div class="link-container">
+    <a href="bieudo.html">📈 Bảng giá</a>
+    <a href="bieudogia.html">📊 Biểu đồ</a>
+  </div>
 
   <script>
     // Lấy giá cà phê & tiêu
@@ -203,6 +230,12 @@ body {
       const seconds = String(now.getSeconds()).padStart(2, '0');
       const timeString = `${hours}:${minutes}:${seconds}`;
       document.getElementById('clock').textContent = timeString;
+
+      // Hiển thị múi giờ
+      const timezoneOffset = now.getTimezoneOffset();
+      const timezoneHours = -timezoneOffset / 60;
+      const timezoneString = `(UTC${timezoneHours >= 0 ? '+' : ''}${timezoneHours})`;
+      document.getElementById('timezone').textContent = timezoneString;
 
       const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
       document.getElementById('thu').textContent = weekdays[now.getDay()];
