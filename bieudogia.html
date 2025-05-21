@@ -2,42 +2,85 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Biểu đồ giá cà phê trong 30 ngày</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
       background: #fffaf0;
-      text-align: center;
       color: #4b2e2e;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+    .container {
+      flex: 1;
+      padding: 20px;
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
     }
     canvas {
-      max-width: 700px;
-      margin: 20px auto;
-    }
-    a {
-      display: inline-block;
-      margin: 10px;
-      color: #2980b9;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
+      max-width: 100% !important;
+      max-height: 400px !important;
+      width: 100%;
+      margin: 0 auto;
     }
     .error-message {
       color: red;
       font-weight: bold;
       margin: 10px 0;
     }
+    .footer {
+      padding: 10px;
+      text-align: center;
+      background-color: #f8f9fa;
+    }
+    .footer a {
+      color: #2980b9;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 576px) {
+      h2 {
+        font-size: 1.3rem;
+      }
+      canvas {
+        max-height: 300px !important;
+      }
+      .footer a {
+        display: block;
+        margin: 5px 0;
+      }
+    }
+    @media (min-width: 577px) and (max-width: 768px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      canvas {
+        max-height: 350px !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <h2>📈 Biểu đồ giá cà phê trong 30 ngày</h2>
-  <canvas id="bieudoCaPhe"></canvas>
-  <div id="errorMessage" class="error-message"></div>
-  <a href="index.html">← Quay lại trang chính</a>
-  <a href="bieudo.html">Xem bảng giá</a>
+  <div class="container">
+    <h2 class="text-center">📈 Biểu đồ giá cà phê trong 30 ngày</h2>
+    <canvas id="bieudoCaPhe"></canvas>
+    <div id="errorMessage" class="error-message text-center"></div>
+  </div>
+  <footer class="footer">
+    <a href="index.html">← Quay lại trang chính</a>
+    <a href="bieudo.html">Xem bảng giá</a>
+  </footer>
 
   <script>
     function veBieuDo() {
@@ -82,21 +125,29 @@
             }]
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
               y: {
-                min: 115000, // Giới hạn trục y từ 115,000
-                max: 135000, // Đến 135,000
+                min: 115000,
+                max: 135000,
                 ticks: {
                   callback: function(value) {
                     return value.toLocaleString('vi-VN');
                   },
-                  stepSize: 5000 // Khoảng cách giữa các giá trị trên trục y
+                  stepSize: 5000,
+                  font: {
+                    size: window.innerWidth < 576 ? 10 : 12
+                  }
                 }
               },
               x: {
                 ticks: {
                   autoSkip: true,
-                  maxTicksLimit: 10 // Giới hạn số lượng nhãn trên trục x
+                  maxTicksLimit: 10,
+                  font: {
+                    size: window.innerWidth < 576 ? 10 : 12
+                  }
                 }
               }
             },
@@ -113,8 +164,8 @@
       }
     }
 
-    // Gọi hàm vẽ biểu đồ khi trang tải
     veBieuDo();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
