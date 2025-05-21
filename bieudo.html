@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biểu đồ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: #fffaf0;
+      color: #4b2e2e;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      flex: 1;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    canvas {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-group .btn {
+      margin: 5px;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .footer {
+      text-align: center;
+      background-color: #f8f9fa;
+      padding: 15px 10px;
+    }
+
+    .footer a {
+      color: #2980b9;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 0 12px;
+      font-size: 1rem;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      h2 { font-size: 1.4rem; }
+      canvas { height: 300px !important; }
+      .footer a {
+        display: block;
+        margin: 8px 0;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📊 Biểu đồ giá cà phê</h2>
+
+    <div class="btn-group">
+      <button class="btn btn-outline-primary" onclick="veBieuDo(7)">7 ngày</button>
+      <button class="btn btn-outline-success" onclick="veBieuDo(30)">30 ngày</button>
+    </div>
+
+    <canvas id="bieudoCaPhe" height="400"></canvas>
+    <div id="errorMessage" class="error-message"></div>
+  </div>
+
+  <footer class="footer">
+    <a href="index.html">← Quay lại trang chính</a>
+    <a href="bieudo.html">Xem bảng giá</a>
+  </footer>
+
+  <script>
+    let chartInstance = null;
+
+    function veBieuDo(soNgay) {
+      try {
+        const duLieuLichSu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
+
+        if (!duLieuLichSu.length) {
+          document.getElementById('errorMessage').textContent = 'Chưa có dữ liệu để hiển thị biểu đồ 😢';
+          return;
+        }
+
+        const duLieuGanNhat = duLieuLichSu.slice(-soNgay);
+        const labels = duLieuGanNhat.map(item => item.ngay);
+        const values = duLieuGanNhat.map(item => item.gia);
+
+        const ctx = document.getElementById('bieudoCaPhe');
+
+        if (chartInstance) chartInstance.destroy();
+
+        chartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Giá cà phê (VNĐ/kg)',
+              data: values,
+              backgroundColor: '#e67e22',
+              borderColor: '#d35400',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: false,
+                ticks: {
+                  callback: val => val.toLocaleString('vi-VN') + ' ₫',
+                  font: {
+                    size: window.innerWidth < 576 ? 10 : 12
+                  }
+                }
+              },
+              x: {
+                ticks: {
+                  font: {
+                    size: window.innerWidth < 576 ? 10 : 12
+                  }
+                }
+              }
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: ctx => ctx.parsed.y.toLocaleString('vi-VN') + ' ₫'
+                }
+              }
+            }
+          }
+        });
+
+        document.getElementById('errorMessage').textContent = '';
+      } catch (err) {
+        document.getElementById('errorMessage').textContent = 'Lỗi khi vẽ biểu đồ: ' + err.message;
+        console.error(err);
+      }
+    }
+
+    veBieuDo(7); // Mặc định hiển thị 7 ngày
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
