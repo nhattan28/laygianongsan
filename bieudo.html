@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Biểu đồ giá cà phê 7 ngày</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: #fffaf0;
+      text-align: center;
+      color: #4b2e2e;
+    }
+    canvas {
+      max-width: 700px;
+      margin: 20px auto;
+    }
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #2980b9;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>📈 Biểu đồ giá cà phê trong 7 ngày</h2>
+  <canvas id="bieudoCaPhe"></canvas>
+  <a href="index.html">← Quay lại</a>
+
+  <script>
+    async function taiDuLieuVaVeBieuDo() {
+      try {
+          const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec'); // thay bằng URL thật
+        const data = await response.json();
+
+        const labels = data.map(item => item.ngay);
+        const values = data.map(item => item.gia);
+
+        new Chart(document.getElementById('bieudoCaPhe'), {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Giá cà phê (VNĐ/kg)',
+              data: values,
+              fill: false,
+              borderColor: '#d35400',
+              tension: 0.3,
+              pointBackgroundColor: '#e67e22'
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                ticks: {
+                  callback: function(value) {
+                    return value.toLocaleString('vi-VN');
+                  }
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+      } catch (e) {
+        document.body.innerHTML += '<p>Không thể tải dữ liệu biểu đồ 😢</p>';
+        console.error(e);
+      }
+    }
+
+    taiDuLieuVaVeBieuDo();
+  </script>
+</body>
+</html>
