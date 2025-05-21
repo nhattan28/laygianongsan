@@ -2,47 +2,91 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Bảng giá cà phê trong 30 ngày</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng</title>
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
       background: #fffaf0;
-      text-align: center;
       color: #4b2e2e;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
     }
+
+    h2 {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 1.8rem;
+    }
+
     a {
       display: inline-block;
       margin: 10px;
       color: #2980b9;
       font-weight: bold;
       text-decoration: none;
+      font-size: 1rem;
     }
+
     a:hover {
       text-decoration: underline;
     }
+
     table {
+      width: 95%;
+      max-width: 800px;
       margin: 20px auto;
       border-collapse: collapse;
-      width: 50%;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
+
     th, td {
-      padding: 10px;
+      padding: 12px 10px;
       border: 1px solid #ddd;
+      font-size: 0.95rem;
     }
+
     th {
       background-color: #f2e6d9;
       font-weight: bold;
     }
+
     .positive {
       color: green;
+      font-weight: bold;
     }
+
     .negative {
       color: red;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      th, td {
+        font-size: 0.85rem;
+        padding: 10px 6px;
+      }
+
+      a {
+        font-size: 0.9rem;
+      }
+    }
+
+    .nav-links {
+      text-align: center;
+      margin-bottom: 30px;
     }
   </style>
 </head>
 <body>
   <h2>📊 Bảng giá cà phê trong 30 ngày</h2>
+
   <table id="bangGia">
     <thead>
       <tr>
@@ -53,40 +97,34 @@
     </thead>
     <tbody id="noiDungBang"></tbody>
   </table>
-  <a href="index.html">← Quay lại trang chính</a>
-  <a href="bieudogia.html">Xem biểu đồ giá</a>
+
+  <div class="nav-links">
+    <a href="index.html">← Quay lại trang chính</a>
+    <a href="bieudogia.html">Xem biểu đồ giá</a>
+  </div>
 
   <script>
     async function capNhatDuLieu() {
       try {
-        // Lấy dữ liệu từ API cho ngày hiện tại
         const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
         const apiData = await response.json();
         const ngayHienTai = apiData.caphe;
 
-        // Lấy dữ liệu cũ từ localStorage
         let duLieuLichSu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
-
-        // Kiểm tra xem ngày cuối cùng trong danh sách có trùng với ngày từ API không
         const ngayCuoiCung = duLieuLichSu.length > 0 ? duLieuLichSu[0].ngay : null;
+
         if (ngayCuoiCung !== ngayHienTai.ngay) {
-          // Nếu ngày khác, thêm dữ liệu mới vào đầu mảng
           duLieuLichSu.unshift({
             ngay: ngayHienTai.ngay,
             gia: ngayHienTai.gia,
             thayDoi: ngayHienTai.thaydoi
           });
-
-          // Giới hạn 30 ngày, xóa ngày cũ nhất nếu vượt quá
           if (duLieuLichSu.length > 30) {
             duLieuLichSu.pop();
           }
-
-          // Lưu lại vào localStorage
           localStorage.setItem('giaCaPhe', JSON.stringify(duLieuLichSu));
         }
 
-        // Cập nhật bảng
         const noiDungBang = document.getElementById('noiDungBang');
         noiDungBang.innerHTML = '';
         duLieuLichSu.forEach(item => {
@@ -100,12 +138,11 @@
           noiDungBang.appendChild(row);
         });
       } catch (e) {
-        document.body.innerHTML += '<p>Không thể tải dữ liệu 😢</p>';
+        document.body.innerHTML += '<p style="text-align:center;">Không thể tải dữ liệu 😢</p>';
         console.error(e);
       }
     }
 
-    // Gọi hàm cập nhật dữ liệu khi tải trang
     capNhatDuLieu();
   </script>
 </body>
