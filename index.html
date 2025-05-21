@@ -83,8 +83,8 @@ body {
     .link-container {
       display: flex;
       justify-content: center;
-      gap: 8px; /* Khoảng cách giữa hai liên kết */
-      margin: 5px 0;
+      gap:1px; /* Khoảng cách giữa hai liên kết */
+      margin: 1px 0;
     }
 
     .link-container a {
@@ -171,11 +171,13 @@ body {
   <!-- Giá tiêu -->
   <div class="section" id="tieu">
     <div id="giaTieu">Đang tải giá tiêu...</div>
+    
   </div>
-  <div class="link-container">
-    <a href="bieudo.html">📈 Bảng giá</a>
-    <a href="bieudogia.html">📊 Biểu đồ</a>
-  </div>
+<div style="display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 12px;">
+  <a href="bieudo.html" style="text-decoration: none; color: inherit;">📈 Bảng giá</a>
+  <a href="bieudogia.html" style="text-decoration: none; color: inherit;">📊 Biểu đồ</a>
+</div>
+
 
   <script>
     // Lấy giá cà phê & tiêu
