@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Biểu đồ giá</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biểu đồ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <style>
     body {
@@ -30,19 +30,19 @@
       text-align: center;
     }
 
-    .chart-wrapper {
-      overflow-x: auto;
-      max-width: 100%;
-      padding-bottom: 10px;
-    }
-
     canvas {
-      min-width: 400px;
-      max-width: 1000px;
+      width: 100% !important;
       height: 400px !important;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
     }
 
     .footer {
@@ -63,23 +63,9 @@
       text-decoration: underline;
     }
 
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-      gap: 10px;
-    }
-
-    .error-message {
-      color: red;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 15px;
-    }
-
     @media (max-width: 576px) {
       h2 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
       }
 
       canvas {
@@ -92,21 +78,22 @@
         font-size: 0.95rem;
       }
     }
+
+    @media (min-width: 577px) and (max-width: 768px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      canvas {
+        height: 350px !important;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>📊 Biểu đồ giá cà phê</h2>
-    
-    <div class="btn-group">
-      <button id="btn7" class="btn btn-outline-primary btn-sm">7 ngày</button>
-      <button id="btn30" class="btn btn-outline-secondary btn-sm">30 ngày</button>
-    </div>
-
-    <div class="chart-wrapper">
-      <canvas id="bieudoCaPhe"></canvas>
-    </div>
-
+    <h2>📈 Biểu đồ giá cà phê trong 30 ngày</h2>
+    <canvas id="bieudoCaPhe"></canvas>
     <div id="errorMessage" class="error-message"></div>
   </div>
 
@@ -116,36 +103,39 @@
   </footer>
 
   <script>
-    let chartInstance = null;
-
-    function veBieuDo(soNgay = 7) {
+    function veBieuDo() {
       try {
-        const duLieu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
+        const duLieuLichSu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
 
-        if (duLieu.length === 0) {
-          document.getElementById('errorMessage').textContent = 'Chưa có dữ liệu để hiển thị 😢';
+        if (!duLieuLichSu || duLieuLichSu.length === 0) {
+          document.getElementById('errorMessage').textContent = 'Chưa có dữ liệu để hiển thị biểu đồ 😢';
           return;
         }
 
-        const duLieuCanDung = duLieu.slice(-soNgay);
-        const labels = duLieuCanDung.map(item => item.ngay);
-        const values = duLieuCanDung.map(item => item.gia);
+        const canvas = document.getElementById('bieudoCaPhe');
+        if (!canvas || typeof Chart === 'undefined') {
+          document.getElementById('errorMessage').textContent = 'Không thể tải biểu đồ 😢';
+          return;
+        }
 
-        const ctx = document.getElementById('bieudoCaPhe').getContext('2d');
+      const duLieuGanDay = duLieuLichSu.slice(-7); // Lấy 7 phần tử cuối cùng
+      const labels = duLieuGanDay.map(item => item.ngay);
+      const values = duLieuGanDay.map(item => item.gia);
 
-        if (chartInstance) chartInstance.destroy();
 
-        chartInstance = new Chart(ctx, {
-          type: 'bar',
+        new Chart(canvas, {
+          type: 'line',
           data: {
             labels: labels,
             datasets: [{
               label: 'Giá cà phê (VNĐ/kg)',
               data: values,
-              backgroundColor: '#d35400',
-              borderRadius: 4,
-              barPercentage: 0.6,
-              categoryPercentage: 0.7
+              borderColor: '#d35400',
+              backgroundColor: '#e67e22',
+              fill: false,
+              tension: 0.3,
+              pointRadius: 4,
+              pointHoverRadius: 6
             }]
           },
           options: {
@@ -153,9 +143,11 @@
             maintainAspectRatio: false,
             scales: {
               y: {
-                beginAtZero: false,
+                min: 115000,
+                max: 135000,
                 ticks: {
                   callback: value => value.toLocaleString('vi-VN') + ' ₫',
+                  stepSize: 5000,
                   font: {
                     size: window.innerWidth < 576 ? 10 : 12
                   }
@@ -163,6 +155,8 @@
               },
               x: {
                 ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 10,
                   font: {
                     size: window.innerWidth < 576 ? 10 : 12
                   }
@@ -181,19 +175,14 @@
             }
           }
         });
-      } catch (err) {
-        document.getElementById('errorMessage').textContent = 'Lỗi khi vẽ biểu đồ: ' + err.message;
+      } catch (error) {
+        document.getElementById('errorMessage').textContent = 'Có lỗi xảy ra khi vẽ biểu đồ: ' + error.message;
+        console.error(error);
       }
     }
 
-    // Gắn sự kiện nút
-    document.getElementById('btn7').addEventListener('click', () => veBieuDo(7));
-    document.getElementById('btn30').addEventListener('click', () => veBieuDo(30));
-
-    // Mặc định 7 ngày
-    veBieuDo(7);
+    veBieuDo();
   </script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
