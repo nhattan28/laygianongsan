@@ -21,21 +21,84 @@
       color: #2980b9;
       font-weight: bold;
     }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 50%;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .positive {
+      color: green;
+    }
+    .negative {
+      color: red;
+    }
   </style>
 </head>
 <body>
-  <h2>📈 Biểu đồ giá cà phê trong 7 ngày</h2>
+  <h2>📈 Biểu đồ giá cà phê trong 30 ngày</h2>
+  <table id="bangGia">
+    <thead>
+      <tr>
+        <th>Ngày</th>
+        <th>Giá (VNĐ/kg)</th>
+        <th>Thay đổi</th>
+      </tr>
+    </thead>
+    <tbody id="noiDungBang"></tbody>
+  </table>
   <canvas id="bieudoCaPhe"></canvas>
   <a href="index.html">← Quay lại</a>
 
   <script>
-    async function taiDuLieuVaVeBieuDo() {
+    async function capNhatDuLieu() {
       try {
-          const response = await fetch('https://script.google.com/macros/s/AKfycbzCBL2_2pA_Hn4gED2YooMaGlhbpWD9558wEQEvPcldIMlIv6UHNEtBdYVtCADD_QrIbA/exec'); // thay bằng URL thật
-        const data = await response.json();
+        // Lấy dữ liệu từ API cho ngày hiện tại
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
+        const apiData = await response.json();
+        const ngayHienTai = apiData.caphe;
 
-        const labels = data.map(item => item.ngay);
-        const values = data.map(item => item.gia);
+        // Lấy dữ liệu cũ từ localStorage
+        let duLieuLichSu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
+
+        // Thêm dữ liệu mới vào đầu mảng
+        duLieuLichSu.unshift({
+          ngay: ngayHienTai.ngay,
+          gia: ngayHienTai.gia,
+          thayDoi: ngayHienTai.thaydoi
+        });
+
+        // Giới hạn 30 ngày, xóa ngày cũ nhất nếu vượt quá
+        if (duLieuLichSu.length > 30) {
+          duLieuLichSu.pop();
+        }
+
+        // Lưu lại vào localStorage
+        localStorage.setItem('giaCaPhe', JSON.stringify(duLieuLichSu));
+
+        // Cập nhật bảng
+        const noiDungBang = document.getElementById('noiDungBang');
+        noiDungBang.innerHTML = '';
+        duLieuLichSu.forEach(item => {
+          const row = document.createElement('tr');
+          const thayDoiClass = item.thayDoi >= 0 ? 'positive' : 'negative';
+          row.innerHTML = `
+            <td>${item.ngay}</td>
+            <td>${item.gia.toLocaleString('vi-VN')}</td>
+            <td class="${thayDoiClass}">${item.thayDoi >= 0 ? '+' : ''}${item.thayDoi.toLocaleString('vi-VN')}</td>
+          `;
+          noiDungBang.appendChild(row);
+        });
+
+        // Cập nhật biểu đồ
+        const labels = duLieuLichSu.map(item => item.ngay);
+        const values = duLieuLichSu.map(item => item.gia);
 
         new Chart(document.getElementById('bieudoCaPhe'), {
           type: 'line',
@@ -68,12 +131,12 @@
           }
         });
       } catch (e) {
-        document.body.innerHTML += '<p>Không thể tải dữ liệu biểu đồ 😢</p>';
+        document.body.innerHTML += '<p>Không thể tải dữ liệu 😢</p>';
         console.error(e);
       }
     }
 
-    taiDuLieuVaVeBieuDo();
+    capNhatDuLieu();
   </script>
 </body>
 </html>
