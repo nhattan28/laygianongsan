@@ -132,11 +132,14 @@
         duLieuLichSu.forEach(item => {
           const row = document.createElement('tr');
           const thayDoiClass = item.thayDoi >= 0 ? 'positive' : 'negative';
-          row.innerHTML = `
-            <td>${item.ngay}</td>
-            <td>${item.gia.toLocaleString('vi-VN')}</td>
-            <td class="${thayDoiClass}">${item.thayDoi >= 0 ? '+' : ''}${item.thayDoi.toLocaleString('vi-VN')}</td>
-          `;
+         row.innerHTML = `
+        <td>${item.ngay}</td>
+        <td>${item.gia.toLocaleString('vi-VN')}</td>
+        <td class="${thayDoiClass}">
+          ${item.thayDoi >= 0 ? '+ ' : '- '}${Math.abs(item.thayDoi).toLocaleString('vi-VN')}
+        </td>
+      `;
+
           noiDungBang.appendChild(row);
         });
       } catch (e) {
