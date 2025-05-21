@@ -2,8 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Biểu đồ giá cà phê 7 ngày</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Bảng giá cà phê trong 30 ngày</title>
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
@@ -11,15 +10,15 @@
       text-align: center;
       color: #4b2e2e;
     }
-    canvas {
-      max-width: 700px;
-      margin: 20px auto;
-    }
     a {
-      display: block;
-      margin-top: 10px;
+      display: inline-block;
+      margin: 10px;
       color: #2980b9;
       font-weight: bold;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
     table {
       margin: 20px auto;
@@ -31,7 +30,8 @@
       border: 1px solid #ddd;
     }
     th {
-      background-color: #f2f2f2;
+      background-color: #f2e6d9;
+      font-weight: bold;
     }
     .positive {
       color: green;
@@ -42,7 +42,7 @@
   </style>
 </head>
 <body>
-  <h2>📈 Biểu đồ giá cà phê trong 30 ngày</h2>
+  <h2>📊 Bảng giá cà phê trong 30 ngày</h2>
   <table id="bangGia">
     <thead>
       <tr>
@@ -53,8 +53,8 @@
     </thead>
     <tbody id="noiDungBang"></tbody>
   </table>
-  <canvas id="bieudoCaPhe"></canvas>
-  <a href="index.html">← Quay lại</a>
+  <a href="index.html">← Quay lại trang chính</a>
+  <a href="bieudogia.html">Xem biểu đồ giá</a>
 
   <script>
     async function capNhatDuLieu() {
@@ -67,20 +67,24 @@
         // Lấy dữ liệu cũ từ localStorage
         let duLieuLichSu = JSON.parse(localStorage.getItem('giaCaPhe')) || [];
 
-        // Thêm dữ liệu mới vào đầu mảng
-        duLieuLichSu.unshift({
-          ngay: ngayHienTai.ngay,
-          gia: ngayHienTai.gia,
-          thayDoi: ngayHienTai.thaydoi
-        });
+        // Kiểm tra xem ngày hiện tại đã tồn tại chưa
+        const ngayDaTonTai = duLieuLichSu.some(item => item.ngay === ngayHienTai.ngay);
+        if (!ngayDaTonTai) {
+          // Thêm dữ liệu mới vào đầu mảng
+          duLieuLichSu.unshift({
+            ngay: ngayHienTai.ngay,
+            gia: ngayHienTai.gia,
+            thayDoi: ngayHienTai.thaydoi
+          });
 
-        // Giới hạn 30 ngày, xóa ngày cũ nhất nếu vượt quá
-        if (duLieuLichSu.length > 30) {
-          duLieuLichSu.pop();
+          // Giới hạn 30 ngày, xóa ngày cũ nhất nếu vượt quá
+          if (duLieuLichSu.length > 30) {
+            duLieuLichSu.pop();
+          }
+
+          // Lưu lại vào localStorage
+          localStorage.setItem('giaCaPhe', JSON.stringify(duLieuLichSu));
         }
-
-        // Lưu lại vào localStorage
-        localStorage.setItem('giaCaPhe', JSON.stringify(duLieuLichSu));
 
         // Cập nhật bảng
         const noiDungBang = document.getElementById('noiDungBang');
@@ -94,41 +98,6 @@
             <td class="${thayDoiClass}">${item.thayDoi >= 0 ? '+' : ''}${item.thayDoi.toLocaleString('vi-VN')}</td>
           `;
           noiDungBang.appendChild(row);
-        });
-
-        // Cập nhật biểu đồ
-        const labels = duLieuLichSu.map(item => item.ngay);
-        const values = duLieuLichSu.map(item => item.gia);
-
-        new Chart(document.getElementById('bieudoCaPhe'), {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Giá cà phê (VNĐ/kg)',
-              data: values,
-              fill: false,
-              borderColor: '#d35400',
-              tension: 0.3,
-              pointBackgroundColor: '#e67e22'
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                ticks: {
-                  callback: function(value) {
-                    return value.toLocaleString('vi-VN');
-                  }
-                }
-              }
-            },
-            plugins: {
-              legend: {
-                display: false
-              }
-            }
-          }
         });
       } catch (e) {
         document.body.innerHTML += '<p>Không thể tải dữ liệu 😢</p>';
