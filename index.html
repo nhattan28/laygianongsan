@@ -11,15 +11,13 @@
     }
 
 body {
-  
   font-family: 'Quicksand', 'Segoe UI', sans-serif;
   margin: 0;
-padding: 5px 0 0 0; /* chỉ padding trên 10px */
+  padding: 5px 0 0 0; /* chỉ padding trên 10px */
   background: linear-gradient(to right, #fff7e6, #ffffff);
   color: #4b2e2e;
   text-align: center;
 }
-
 
     h1, h2{
       color: #6b4226;
@@ -45,7 +43,6 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
     border-collapse: collapse;
     font-size: 16px;
   }
-
 
     th, td {
       border: 1px solid #ccc;
@@ -77,7 +74,6 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
   .time {
     font-size: 18px;
     font-weight: bold;
-  
     display: inline-block;
     width: auto;
     height: auto;
@@ -122,7 +118,8 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
 <table class="time-table">
   <tr>
     <td colspan="3">
-<span id="clock" class="time">--:--:--</span>
+      <span id="clock" class="time">--:--:--</span>
+      <span id="timezone" class="time" style="font-size: 14px; margin-left: 10px;">(Đang tải...)</span>
     </td>
   </tr>
   <tr>
@@ -135,10 +132,11 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
     <td><span id="ngayDuong">Đang tải...</span></td>
     <td><span id="ngayAmLich">Đang tải...</span></td>
   </tr>
-<td colspan="3">
-    <span id="ngayDacBiet"></span>
-
+  <tr>
+    <td colspan="3">
+      <span id="ngayDacBiet"></span>
     </td>
+  </tr>
 </table>
   
   <!-- Giá cà phê -->
@@ -176,7 +174,6 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
           </table>`;
         document.getElementById('giaCaPhe').innerHTML = cpTable;
 
-
         // Tiêu
         const tieu = data.tieu;
         let tieuHTML = `<b>${tieu.tieuDe.replace("hôm nay ", "")}</b><br><table><tr><th>Khu Vực</th><th>Giá</th><th>Thay Đổi</th></tr>`;
@@ -206,6 +203,12 @@ padding: 5px 0 0 0; /* chỉ padding trên 10px */
       const seconds = String(now.getSeconds()).padStart(2, '0');
       const timeString = `${hours}:${minutes}:${seconds}`;
       document.getElementById('clock').textContent = timeString;
+
+      // Hiển thị múi giờ
+      const timezoneOffset = now.getTimezoneOffset();
+      const timezoneHours = -timezoneOffset / 60;
+      const timezoneString = `(UTC${timezoneHours >= 0 ? '+' : ''}${timezoneHours})`;
+      document.getElementById('timezone').textContent = timezoneString;
 
       const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
       document.getElementById('thu').textContent = weekdays[now.getDay()];
