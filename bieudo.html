@@ -69,8 +69,9 @@
 
         // Kiểm tra xem ngày hiện tại đã tồn tại chưa
         const ngayDaTonTai = duLieuLichSu.some(item => item.ngay === ngayHienTai.ngay);
+
+        // Nếu ngày chưa tồn tại, thêm vào đầu mảng
         if (!ngayDaTonTai) {
-          // Thêm dữ liệu mới vào đầu mảng
           duLieuLichSu.unshift({
             ngay: ngayHienTai.ngay,
             gia: ngayHienTai.gia,
@@ -105,6 +106,7 @@
       }
     }
 
+    // Gọi hàm cập nhật dữ liệu khi tải trang
     capNhatDuLieu();
   </script>
 </body>
