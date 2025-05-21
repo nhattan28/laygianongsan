@@ -144,7 +144,6 @@ body {
   <tr>
     <td colspan="3">
       <span id="clock" class="time">--:--:--</span>
-      <span id="timezone" class="time" style="font-size: 14px; margin-left: 10px;">(Đang tải...)</span>
     </td>
   </tr>
   <tr>
@@ -230,13 +229,7 @@ body {
       const seconds = String(now.getSeconds()).padStart(2, '0');
       const timeString = `${hours}:${minutes}:${seconds}`;
       document.getElementById('clock').textContent = timeString;
-
-      // Hiển thị múi giờ
-      const timezoneOffset = now.getTimezoneOffset();
-      const timezoneHours = -timezoneOffset / 60;
-      const timezoneString = `(UTC${timezoneHours >= 0 ? '+' : ''}${timezoneHours})`;
-      document.getElementById('timezone').textContent = timezoneString;
-
+      
       const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
       document.getElementById('thu').textContent = weekdays[now.getDay()];
     }
