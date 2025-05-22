@@ -73,6 +73,22 @@
         font-size: 0.9rem;
       }
     }
+
+    .footer {
+      text-align: center;
+      padding: 15px 10px;
+    }
+
+    .footer a {
+      color: #c40000;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -81,18 +97,23 @@
   <p>Cập nhật từ <a href="https://webgia.com/gia-xang-dau/petrolimex/" target="_blank">WebGia.com</a></p>
 
   <script>
-fetch("https://script.google.com/macros/s/AKfycbydTNQZBG2pMFvdtiQIqi7U_PttmcXWHM_edNSvxfO-ieTCRXloNv5b0d7R5Ey6qht-/exec")
-  .then(res => res.text())
-  .then(html => {
-    // Xóa tất cả thẻ <a> nhưng giữ lại nội dung bên trong
-    html = html.replace(/<a[^>]*>(.*?)<\/a>/gi, '$1');
-    document.getElementById("bang-gia").innerHTML = html;
-  })
-  .catch(err => {
-    document.getElementById("bang-gia").innerHTML = "<p style='text-align:center;color:red;'>Không thể tải dữ liệu.</p>";
-    console.error(err);
-  });
-
+    fetch("https://script.google.com/macros/s/AKfycbydTNQZBG2pMFvdtiQIqi7U_PttmcXWHM_edNSvxfO-ieTCRXloNv5b0d7R5Ey6qht-/exec")
+      .then(res => res.text())
+      .then(html => {
+        // Xóa tất cả thẻ <a> nhưng giữ lại nội dung bên trong
+        html = html.replace(/<a[^>]*>(.*?)<\/a>/gi, '$1');
+        document.getElementById("bang-gia").innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById("bang-gia").innerHTML = "<p style='text-align:center;color:red;'>Không thể tải dữ liệu.</p>";
+        console.error(err);
+      });
   </script>
+
+  <footer class="footer">
+    <a href="index.html">← Quay lại trang chính</a>
+    <a href="bang.html">Xem bảng giá</a>
+    <a href="xangdau.html">Xăng dầu</a>
+  </footer>
 </body>
 </html>
