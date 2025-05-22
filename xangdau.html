@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giá xăng dầu hôm nay (Petrolimex)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdfdfd;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h2 {
+      color: #c40000;
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f7f7f7;
+      font-weight: bold;
+    }
+
+    td a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    p {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+    }
+
+    p a {
+      text-decoration: none;
+      color: #0077cc;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Giá xăng dầu hôm nay</h2>
+  <div id="bang-gia">Đang tải dữ liệu...</div>
+  <p>Cập nhật từ <a href="https://webgia.com/gia-xang-dau/petrolimex/" target="_blank">WebGia.com</a></p>
+
+  <script>
+fetch("https://script.google.com/macros/s/AKfycbydTNQZBG2pMFvdtiQIqi7U_PttmcXWHM_edNSvxfO-ieTCRXloNv5b0d7R5Ey6qht-/exec")
+  .then(res => res.text())
+  .then(html => {
+    // Xóa tất cả thẻ <a> nhưng giữ lại nội dung bên trong
+    html = html.replace(/<a[^>]*>(.*?)<\/a>/gi, '$1');
+    document.getElementById("bang-gia").innerHTML = html;
+  })
+  .catch(err => {
+    document.getElementById("bang-gia").innerHTML = "<p style='text-align:center;color:red;'>Không thể tải dữ liệu.</p>";
+    console.error(err);
+  });
+
+  </script>
+</body>
+</html>
