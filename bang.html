@@ -87,7 +87,7 @@
   </style>
 </head>
 <body>
-  <h2>📊 Bảng giá cà phê trong 30 ngày</h2>
+  <h2>📊 Bảng giá cà phê trong 10 ngày</h2>
 
   <table id="bangGia">
     <thead>
@@ -122,7 +122,7 @@
             gia: ngayHienTai.gia,
             thayDoi: ngayHienTai.thaydoi
           });
-          if (duLieuLichSu.length > 30) {
+          if (duLieuLichSu.length > 10) {
             duLieuLichSu.pop();
           }
           localStorage.setItem('giaCaPhe', JSON.stringify(duLieuLichSu));
