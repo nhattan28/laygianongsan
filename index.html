@@ -89,7 +89,6 @@ body {
       font-weight: bold;
     }
 
-
     /* Thêm style cho liên kết nằm ngang */
     .link-container {
       display: flex;
@@ -172,6 +171,11 @@ body {
   <tr>
     <td colspan="3">
       <span id="ngayDacBiet"></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3">
+      <span id="tenNgayLe">Không có ngày lễ</span>
     </td>
   </tr>
 </table>
@@ -259,6 +263,10 @@ body {
       
       const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
       document.getElementById('thu').textContent = weekdays[now.getDay()];
+      
+      // Cập nhật ngày lễ
+      const today = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      loadNgayLe(today);
     }
 
     setInterval(updateClock, 1000);
@@ -280,6 +288,20 @@ body {
           document.getElementById('ngayAmLich').textContent = 'Lỗi';
           document.getElementById('ngayDacBiet').textContent = 'Lỗi';
           console.error('Lỗi lấy lịch:', error);
+        });
+    }
+
+    // Lấy dữ liệu ngày lễ từ le.json
+    function loadNgayLe(today) {
+      fetch('le.json')
+        .then(response => response.json())
+        .then(data => {
+          const ngayLe = data.find(item => item.ngay === today && item.loai === 'duong');
+          document.getElementById('tenNgayLe').textContent = ngayLe ? ngayLe.ten : 'Không có ngày lễ';
+        })
+        .catch(error => {
+          document.getElementById('tenNgayLe').textContent = 'Lỗi tải ngày lễ';
+          console.error('Lỗi tải le.json:', error);
         });
     }
 
