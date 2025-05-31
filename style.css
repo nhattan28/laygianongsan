@@ -79,6 +79,7 @@ p {
     transform: translateY(0);
   }
 }
+
 #confetti-canvas {
   position: fixed;
   top: 0;
@@ -90,3 +91,4 @@ p {
   position: relative;
   z-index: 2;
 }
+
