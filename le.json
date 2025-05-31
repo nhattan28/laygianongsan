@@ -7,21 +7,9 @@
   },
   {
     "loai": "duong",
-    "ngay": "06-01",
-    "ten": "Ngày Học sinh - Sinh viên Việt Nam",
-    "chuc": "Chúc các bạn học sinh sinh viên học tập tốt, đạt nhiều thành tích xuất sắc!"
-  },
-  {
-    "loai": "duong",
     "ngay": "03-02",
     "ten": "Ngày thành lập Đảng Cộng sản Việt Nam",
     "chuc": "Chúc mừng ngày thành lập Đảng! Chúc đất nước luôn vững mạnh và phát triển!"
-  },
-  {
-    "loai": "duong",
-    "ngay": "21-02",
-    "ten": "Ngày Thầy thuốc Việt Nam",
-    "chuc": "Chúc các y bác sĩ luôn mạnh khỏe, tận tâm với người bệnh!"
   },
   {
     "loai": "duong",
@@ -33,7 +21,7 @@
     "loai": "duong",
     "ngay": "26-03",
     "ten": "Ngày thành lập Đoàn TNCS Hồ Chí Minh",
-    "chuc": "Tuổi trẻ Việt Nam – nhiệt huyết và khát vọng! Chúc mừng ngày thành lập Đoàn!"
+    "chuc": "Tuổi trẻ Việt Nam - nhiệt huyết và khát vọng! Chúc mừng ngày thành lập Đoàn!"
   },
   {
     "loai": "duong",
@@ -55,12 +43,6 @@
   },
   {
     "loai": "duong",
-    "ngay": "28-06",
-    "ten": "Ngày Gia đình Việt Nam",
-    "chuc": "Chúc mọi gia đình luôn ấm no, hạnh phúc và yêu thương nhau!"
-  },
-  {
-    "loai": "duong",
     "ngay": "27-07",
     "ten": "Ngày Thương binh Liệt sĩ",
     "chuc": "Tri ân những người anh hùng đã hy sinh vì Tổ quốc!"
@@ -70,12 +52,6 @@
     "ngay": "02-09",
     "ten": "Quốc khánh",
     "chuc": "Chúc mừng Quốc khánh Việt Nam! Mừng đất nước thêm phát triển, giàu mạnh và phồn vinh!"
-  },
-  {
-    "loai": "duong",
-    "ngay": "01-10",
-    "ten": "Ngày Quốc tế Người cao tuổi",
-    "chuc": "Kính chúc ông bà và người cao tuổi sống vui, sống khỏe, sống thọ!"
   },
   {
     "loai": "duong",
@@ -97,17 +73,10 @@
   },
   {
     "loai": "duong",
-    "ngay": "01-12",
-    "ten": "Ngày Thế giới phòng chống AIDS",
-    "chuc": "Nâng cao nhận thức và hành động vì một xã hội khỏe mạnh, không còn kỳ thị!"
-  },
-  {
-    "loai": "duong",
     "ngay": "22-12",
     "ten": "Ngày thành lập Quân đội Nhân dân Việt Nam",
     "chuc": "Kính chúc các chiến sĩ bộ đội luôn vững vàng tay súng, giữ gìn bình yên cho Tổ quốc!"
   },
-
   {
     "loai": "am",
     "ngay": "01-01",
@@ -149,11 +118,5 @@
     "ngay": "23-12",
     "ten": "Tết Ông Công Ông Táo",
     "chuc": "Chúc gia đình bạn tiễn Ông Táo về trời suôn sẻ, chuẩn bị năm mới an khang!"
-  },
-  {
-    "loai": "am",
-    "ngay": "30-12",
-    "ten": "Giao thừa",
-    "chuc": "Chúc bạn và người thân đón Giao thừa an lành, hạnh phúc bên nhau!"
   }
 ]
