@@ -7,15 +7,72 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="confetti-canvas"></canvas> <!-- Nền động -->
+  <canvas id="confetti-canvas"></canvas>
   <div class="wrapper">
     <div class="card">
       <h1 id="ten-le">🎉 Xin chào!</h1>
       <p id="loi-chuc">Chúc bạn một ngày tuyệt vời và tràn đầy năng lượng!</p>
     </div>
   </div>
+
   <script src="main.js"></script>
   <script src="demnguoc.js"></script>
-  <script src="confetti.js"></script> <!-- Phải có dòng này -->
+  <script>
+    // Hiệu ứng confetti đơn giản
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+
+    const particles = Array.from({length: 100}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 4 + 1,
+      d: Math.random() * 50,
+      color: ["#fde132", "#009bde", "#ff6b00"][Math.floor(Math.random() * 3)],
+      tilt: Math.floor(Math.random() * 5) - 5,
+      tiltAngle: 0,
+      tiltAngleIncremental: Math.random() * 0.07 + 0.05
+    }));
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+        ctx.stroke();
+      });
+      updateConfetti();
+    }
+
+    function updateConfetti() {
+      particles.forEach(p => {
+        p.y += Math.cos(p.d) + 1 + p.r / 2;
+        p.x += Math.sin(p.d);
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.tilt = Math.sin(p.tiltAngle) * 15;
+
+        if (p.y > H) {
+          p.x = Math.random() * W;
+          p.y = -10;
+        }
+      });
+    }
+
+    setInterval(drawConfetti, 30);
+
+    window.addEventListener("resize", () => {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+    });
+  </script>
 </body>
 </html>
