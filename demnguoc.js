@@ -10,6 +10,7 @@ function parseDuongLich(ngayThang) {
 function getCountdownTime(futureDate) {
   const now = new Date();
   const distance = futureDate - now;
+
   if (distance <= 0) return "🎉 Đã đến ngày lễ!";
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -33,7 +34,7 @@ async function loadLe() {
     duongLe.forEach(le => {
       const leDate = parseDuongLich(le.ngay);
       const diff = leDate - now;
-      if (diff > 0 && diff < khoangCach) {
+      if (diff >= 0 && diff < khoangCach) {
         khoangCach = diff;
         leGanNhat = { ...le, date: leDate };
       }
@@ -53,9 +54,12 @@ async function loadLe() {
 
       document.querySelector(".card").appendChild(countdownEl);
 
-      setInterval(() => {
+      // Cập nhật liên tục mỗi giây
+      function updateClock() {
         document.getElementById("clock").textContent = getCountdownTime(leGanNhat.date);
-      }, 1000);
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
     }
   } catch (e) {
     console.error("Lỗi tải file lễ:", e);
