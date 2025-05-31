@@ -1,0 +1,32 @@
+[
+  {
+    "loai": "duong",
+    "ngay": "01-01",
+    "ten": "Tết Dương lịch",
+    "chuc": "Chúc mừng năm mới! Chúc bạn một năm tràn đầy sức khỏe, hạnh phúc và thành công!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "01-06",
+    "ten": "Quốc tế Thiếu nhi",
+    "chuc": "Chúc các bé thật vui vẻ, chăm ngoan, học giỏi và luôn luôn hạnh phúc!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "20-10",
+    "ten": "Ngày Phụ nữ Việt Nam",
+    "chuc": "Chúc mừng ngày Phụ nữ Việt Nam! Chúc bạn luôn xinh đẹp, mạnh mẽ và hạnh phúc!"
+  },
+  {
+    "loai": "am",
+    "ngay": "01-01",
+    "ten": "Tết Nguyên Đán",
+    "chuc": "Chúc mừng năm mới! Vạn sự như ý, an khang thịnh vượng, tấn tài tấn lộc!"
+  },
+  {
+    "loai": "am",
+    "ngay": "15-08",
+    "ten": "Tết Trung Thu",
+    "chuc": "Chúc bạn và gia đình một Trung Thu vui vẻ, ấm áp và tròn đầy yêu thương!"
+  }
+]
