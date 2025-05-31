@@ -1,4 +1,3 @@
-// Hàm tính số mili giây giữa hai ngày
 function getCountdownTime(futureDate) {
   const now = new Date();
   const distance = futureDate - now;
@@ -13,29 +12,21 @@ function getCountdownTime(futureDate) {
   return `${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
 }
 
-// Chuyển định dạng "dd-mm" thành Date object trong năm hiện tại
 function parseDuongLich(ngayThang) {
   const [day, month] = ngayThang.split("-").map(Number);
   const now = new Date();
   let year = now.getFullYear();
   const targetDate = new Date(year, month - 1, day);
-
-  // Nếu ngày đó đã qua rồi trong năm nay, thì lấy sang năm sau
-  if (targetDate < now) {
-    return new Date(year + 1, month - 1, day);
-  }
+  if (targetDate < now) return new Date(year + 1, month - 1, day);
   return targetDate;
 }
 
-// Tải dữ liệu lễ từ JSON
 async function loadLe() {
-  const res = await fetch("le_full.json");
+  const res = await fetch("le.json");
   const list = await res.json();
 
-  // Lấy danh sách lễ dương lịch
   const duongLe = list.filter(le => le.loai === "duong");
 
-  // Tìm ngày lễ gần nhất (dương lịch)
   const now = new Date();
   let leGanNhat = null;
   let ngayGanNhat = null;
@@ -49,14 +40,13 @@ async function loadLe() {
   });
 
   if (leGanNhat) {
-    document.getElementById("ten-le").textContent = `🎉 Sắp đến: ${leGanNhat.ten}`;
+    document.getElementById("ten-le").textContent = `🎉 ${leGanNhat.ten}`;
     document.getElementById("loi-chuc").textContent = leGanNhat.chuc;
 
     const countdownEl = document.createElement("p");
     countdownEl.id = "countdown";
     document.querySelector(".card").appendChild(countdownEl);
 
-    // Cập nhật liên tục mỗi giây
     setInterval(() => {
       countdownEl.textContent = "⏳ Còn lại: " + getCountdownTime(ngayGanNhat);
     }, 1000);
