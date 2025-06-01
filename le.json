@@ -1,5 +1,4 @@
 [
-  // --- LỄ DƯƠNG LỊCH TRUYỀN THỐNG VIỆT NAM ---
   {
     "loai": "duong",
     "ngay": "01-01",
@@ -79,7 +78,6 @@
     "chuc": "Kính chúc các chiến sĩ bộ đội luôn vững vàng tay súng, giữ gìn bình yên cho Tổ quốc!"
   },
 
-  // --- LỄ ÂM LỊCH TRUYỀN THỐNG ---
   {
     "loai": "am",
     "ngay": "01-01",
@@ -123,7 +121,6 @@
     "chuc": "Chúc gia đình bạn tiễn Ông Táo về trời suôn sẻ, chuẩn bị năm mới an khang!"
   },
 
-  // --- TÔN GIÁO ---
   {
     "loai": "duong",
     "ngay": "15-04",
@@ -149,7 +146,6 @@
     "chuc": "Tưởng nhớ các vị thánh – nguyện noi gương sống tốt lành và bác ái."
   },
 
-  // --- MÔI TRƯỜNG, SỨC KHỎE, NHÂN ĐẠO ---
   {
     "loai": "duong",
     "ngay": "22-03",
@@ -181,7 +177,6 @@
     "chuc": "Thế giới đang lớn lên từng giây! Hãy cùng hướng tới cuộc sống chất lượng và bền vững!"
   },
 
-  // --- QUỐC TẾ HÓA, GIỚI & NHÂN QUYỀN ---
   {
     "loai": "duong",
     "ngay": "21-03",
