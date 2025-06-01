@@ -1,4 +1,5 @@
 [
+  // --- LỄ DƯƠNG LỊCH TRUYỀN THỐNG VIỆT NAM ---
   {
     "loai": "duong",
     "ngay": "01-01",
@@ -77,6 +78,8 @@
     "ten": "Ngày thành lập Quân đội Nhân dân Việt Nam",
     "chuc": "Kính chúc các chiến sĩ bộ đội luôn vững vàng tay súng, giữ gìn bình yên cho Tổ quốc!"
   },
+
+  // --- LỄ ÂM LỊCH TRUYỀN THỐNG ---
   {
     "loai": "am",
     "ngay": "01-01",
@@ -118,5 +121,83 @@
     "ngay": "23-12",
     "ten": "Tết Ông Công Ông Táo",
     "chuc": "Chúc gia đình bạn tiễn Ông Táo về trời suôn sẻ, chuẩn bị năm mới an khang!"
+  },
+
+  // --- TÔN GIÁO ---
+  {
+    "loai": "duong",
+    "ngay": "15-04",
+    "ten": "Lễ Phật Đản (Vesak)",
+    "chuc": "Nam mô Bổn Sư Thích Ca Mâu Ni Phật! Kính chúc bạn một mùa Phật Đản an lành, tâm sáng và lòng từ bi lan tỏa!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "24-12",
+    "ten": "Lễ Giáng Sinh (Noel)",
+    "chuc": "Merry Christmas! Cầu mong ánh sáng Thiên Chúa luôn dẫn đường bạn đến hạnh phúc và bình an!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "02-11",
+    "ten": "Lễ Các Đẳng Linh Hồn (Công giáo)",
+    "chuc": "Cầu nguyện cho các linh hồn được yên nghỉ và gia đình luôn được chở che, bình an."
+  },
+  {
+    "loai": "duong",
+    "ngay": "01-11",
+    "ten": "Lễ Các Thánh Nam Nữ",
+    "chuc": "Tưởng nhớ các vị thánh – nguyện noi gương sống tốt lành và bác ái."
+  },
+
+  // --- MÔI TRƯỜNG, SỨC KHỎE, NHÂN ĐẠO ---
+  {
+    "loai": "duong",
+    "ngay": "22-03",
+    "ten": "Ngày Nước Thế giới",
+    "chuc": "Bảo vệ nguồn nước – bảo vệ sự sống! Chúc bạn luôn sống xanh, sống sạch!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "07-04",
+    "ten": "Ngày Sức khỏe Thế giới",
+    "chuc": "Chúc bạn luôn khỏe mạnh, năng động và đầy sức sống – vì một thế giới khỏe mạnh!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "22-04",
+    "ten": "Ngày Trái Đất",
+    "chuc": "Mỗi hành động nhỏ vì Trái Đất là một đóng góp lớn! Hãy sống thân thiện với môi trường nhé!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "05-06",
+    "ten": "Ngày Môi trường Thế giới",
+    "chuc": "Hành tinh xanh là nhà của chúng ta! Chúc bạn sống xanh - sống lành mỗi ngày!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "11-07",
+    "ten": "Ngày Dân số Thế giới",
+    "chuc": "Thế giới đang lớn lên từng giây! Hãy cùng hướng tới cuộc sống chất lượng và bền vững!"
+  },
+
+  // --- QUỐC TẾ HÓA, GIỚI & NHÂN QUYỀN ---
+  {
+    "loai": "duong",
+    "ngay": "21-03",
+    "ten": "Ngày Quốc tế Xóa bỏ Phân biệt Chủng tộc",
+    "chuc": "Thế giới cần yêu thương, không cần định kiến! Hãy cùng nhau lan tỏa lòng nhân ái!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "17-05",
+    "ten": "Ngày Quốc tế chống Kỳ thị LGBT+",
+    "chuc": "Yêu là quyền của mỗi người! Chúc một ngày đầy tự hào và tôn trọng sự khác biệt!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "10-12",
+    "ten": "Ngày Nhân quyền Thế giới",
+    "chuc": "Tự do - Bình đẳng - Bác ái. Chúc bạn sống đúng, sống tốt và luôn được tôn trọng!"
   }
 ]
