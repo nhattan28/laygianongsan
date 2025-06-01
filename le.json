@@ -266,5 +266,53 @@
     "ngay": "10-10",
     "ten": "Ngày Giải phóng Thủ đô",
     "chuc": "Tự hào Hà Nội ngàn năm văn hiến – mừng ngày Thủ đô được giải phóng!"
-  }
+  },
+  {
+    "loai": "duong",
+    "ngay": "14-03",
+    "ten": "Ngày số Pi (Pi Day)",
+    "chuc": "3.14 – Ngày của những bộ não toán học! Chúc bạn luôn logic và sáng tạo!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "05-06",
+    "ten": "Ngày Quốc tế Môi trường",
+    "chuc": "Trái Đất là nhà – hãy yêu lấy ngôi nhà xanh của chúng ta!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "28-07",
+    "ten": "Ngày Phòng chống Viêm gan Thế giới",
+    "chuc": "Hãy bảo vệ gan – cơ quan thầm lặng nhưng cực kỳ quan trọng!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "29-09",
+    "ten": "Ngày Tim mạch Thế giới",
+    "chuc": "Giữ trái tim khỏe mạnh để sống trọn vẹn từng nhịp yêu thương!"
+  },
+    {
+    "loai": "duong",
+    "ngay": "07-04",
+    "ten": "Ngày Sức khỏe Thế giới",
+    "chuc": "Sức khỏe là vàng – hãy trân quý từng hơi thở khỏe mạnh mỗi ngày!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "31-05",
+    "ten": "Ngày Thế giới Không thuốc lá",
+    "chuc": "Một lá phổi sạch là một cuộc đời khỏe mạnh – hãy nói không với thuốc lá!"
+  },
+    {
+    "loai": "duong",
+    "ngay": "31-10",
+    "ten": "Lễ hội Halloween",
+    "chuc": "Happy Halloween! Hãy cùng hóa trang và vui hết mình nhé… đừng quên cho kẹo nếu không muốn bị ghẹo!"
+  },
+  {
+    "loai": "duong",
+    "ngay": "25-12",
+    "ten": "Lễ Giáng Sinh",
+    "chuc": "Merry Christmas! Chúc bạn một mùa Giáng Sinh an lành, ấm áp và đầy yêu thương!"
+  } 
 ]
