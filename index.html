@@ -2,257 +2,219 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Giá Nông Sản</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #e6f3e6, #f0f7fa);
+      color: #2d3748;
+      margin: 0;
+      overflow: hidden;
     }
-
-body {
-  font-family: 'Quicksand', 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 5px 0 0 0; /* chỉ padding trên 10px */
-  background: linear-gradient(to right, #fff7e6, #ffffff);
-  color: #4b2e2e;
-  text-align: center;
-}
-
-    h1, h2{
-      color: #6b4226;
-  margin: 0.2rem 0;
+    #three-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      opacity: 0.2;
     }
-
-  h3 {
-    margin: 2px 0 4px 0;
-    padding: 0;
-    font-size: 1.5rem;
-    font-weight: auto;
-    color: #6b4226;
-  }
-
-    .section {
-      margin-bottom: 10px;
+    .card {
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
     }
-
-  table {
-    width: 100%;
-    max-width: 800px;
-    margin: 2px auto 10px auto; /* Giảm khoảng cách trên xuống 4px */
-    border-collapse: collapse;
-    font-size: 16px;
-  }
-
+    .card:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+    table {
+      width: 100%; /* Reduced width to minimize excess space */
+      margin: auto;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
     th, td {
-      border: 1px solid #ccc;
+      border: 1px solid #e2e8f0;
       padding: 4px;
       text-align: center;
     }
-
     th {
-      background-color: #f2e6d9;
-      font-weight: bold;
+      background: #edf2f7;
+      font-weight: 600;
     }
-
-  .container {
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  .icon {
-    font-size: 50px;
-    color: #3498db;
-    margin-bottom: 10px;
-   }
-
-    .label {
-      font-weight: auto;
-      color: #2c3e50;
-    }
-
-  .time {
-    font-size: 18px;
-    font-weight: bold;
-    display: inline-block;
-    width: auto;
-    height: auto;
-  }
-
     .positive {
-      color: green;
+      color: #38a169;
       font-weight: bold;
     }
-    
     .negative {
-      color: red;
+      color: #e53e3e;
       font-weight: bold;
     }
-
-    /* Thêm style cho liên kết nằm ngang */
-    .link-container {
-      display: flex;
-      justify-content: center;
-      gap:1px; /* Khoảng cách giữa hai liên kết */
-      margin: 1px 0;
+    .nav-link {
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      background: #edf2f7;
+      padding: 6px 12px;
+      border-radius: 6px;
     }
-
-    .link-container a {
-      display: inline-block;
-      margin: 0;
-      font-weight: bold;
-      color: #c0392b;
-      text-decoration: none;
+    .nav-link:hover {
+      background: #2b6cb0;
+      color: white;
+      transform: scale(1.05);
     }
-
-    .link-container a:hover {
-      text-decoration: underline;
-    }
-
-    @media screen and (max-width: 500px) {
-      h1 {
-        font-size: 1rem;
-      }
-
-      h2 {
-        font-size: 1rem;
-      }
-
+    @media (max-width: 640px) {
       table {
-        width: 90%;
-        font-size: 14px;
+        font-size: 0.7rem;
+        width: 90%; /* Adjust width for mobile */
       }
-
       th, td {
-        padding: 14px;
+        padding: 3px;
       }
-
-      .container {
-        padding: 10px;
+      .nav-link {
+        padding: 4px 8px;
+        font-size: 0.75rem;
       }
-
-      .time {
-        font-size: 16px;
-      }
-
-      .icon {
-        font-size: 36px;
-      }
-
-      .link-container {
-        flex-direction: column; /* Chuyển thành dọc trên màn hình nhỏ */
-        gap: 10px;
+      h3 {
+        font-size: 1rem;
       }
     }
-    
   </style>
 </head>
-<body>
-  <h3>🌾 Giá Nông Sản 🌾</h3>
-  
-  <!-- Lịch âm dương -->
-  <div class="container">
-<table class="time-table">
-  <tr>
-    <td colspan="3">
-      <span id="clock" class="time">--:--:--</span>
-    </td>
-  </tr>
-  <tr>
-    <th>Thứ</th>
-    <th>Dương lịch</th>
-    <th>Âm Lịch</th>
-  </tr>
-  <tr>
-    <td><span id="thu">Đang tải...</span></td>
-    <td><span id="ngayDuong">Đang tải...</span></td>
-    <td><span id="ngayAmLich">Đang tải...</span></td>
-  </tr>
-  <tr>
-    <td colspan="3">
-      <span id="ngayDacBiet"></span>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3">
-      <span id="tenNgayLe">Không có ngày lễ</span>
-    </td>
-  </tr>
-</table>
-  
-  <!-- Giá cà phê -->
-  <div class="section" id="caphe">
-    <div id="giaCaPhe">Đang tải giá cà phê...</div>
-  </div>
+<body class="min-h-screen flex items-center justify-center p-2">
+  <canvas id="three-canvas"></canvas>
+<div class="w-full max-w-[95vw] md:max-w-4xl mx-auto h-auto grid grid-rows-[auto,1fr,1fr] gap-3 py-3">
+    <!-- Navigation Buttons -->
+    <div class="flex flex-wrap justify-center gap-2">
+      <a href="bang.html" class="nav-link text-sm font-semibold text-gray-700">📈 Bảng giá</a>
+      <a href="bieudo.html" class="nav-link text-sm font-semibold text-gray-700">📊 Biểu đồ</a>
+      <a href="xangdau.html" class="nav-link text-sm font-semibold text-gray-700">⛽ Xăng dầu</a>
+      <a href="ngayle.html" class="nav-link text-sm font-semibold text-gray-700">🎉 Ngày lễ</a>
+    </div>
 
-  <!-- Giá tiêu -->
-  <div class="section" id="tieu">
-    <div id="giaTieu">Đang tải giá tiêu...</div>
-    
-  </div>
-<div style="display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 12px;">
-  <a href="bang.html" style="text-decoration: none; color: inherit;">📈 Bảng giá</a>
-  <a href="bieudo.html" style="text-decoration: none; color: inherit;">📊 Biểu đồ</a>
-  <a href="xangdau.html" style="text-decoration: none; color: inherit;">⛽ Xăng dầu</a>
-  <a href="ngayle.html" style="text-decoration: none; color: inherit;">🎉 Ngày lễ</a>  
-</div>
-  <script>
-    
-    // Lấy giá cà phê & tiêu
-  async function loadGia() {
-  try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
-    const data = await response.json();
-
-    // Cà phê
-    const cp = data.caphe;
-    let cpTable = `<b>Giá cà phê ngày ${cp.ngay}</b><br>`;
-    cpTable += `
-      <table>
-        <tr><th>Khu vực</th><th>Giá</th><th>Thay đổi</th></tr>
+    <!-- Lịch âm dương -->
+    <div class="card p-3">
+      <h3 class="text-lg md:text-xl font-semibold text-center text-gray-800 mb-2">🌾 Giá Nông Sản 🌾</h3>
+      <table class="time-table">
         <tr>
-          <td>Đắk Nông</td>
-          <td>${cp.gia.toLocaleString('vi-VN')}</td>
-          <td>
-            <span class="${cp.thaydoi > 0 ? 'positive' : cp.thaydoi < 0 ? 'negative' : ''}">
-              ${cp.thaydoi > 0 ? `+ ${cp.thaydoi.toLocaleString('vi-VN')}` :
-                cp.thaydoi < 0 ? `- ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}` : `Không đổi`}
-            </span>
+          <td colspan="3" class="py-1">
+            <span id="clock" class="text-base md:text-lg font-bold text-gray-700">--:--:--</span>
           </td>
         </tr>
-      </table>`;
-    document.getElementById('giaCaPhe').innerHTML = cpTable;
+        <tr>
+          <th>Thứ</th>
+          <th>Dương lịch</th>
+          <th>Âm Lịch</th>
+        </tr>
+        <tr>
+          <td><span id="thu">Đang tải...</span></td>
+          <td><span id="ngayDuong">Đang tải...</span></td>
+          <td><span id="ngayAmLich">Đang tải...</span></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <span id="ngayDacBiet" class="text-xs text-gray-600"></span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <span id="tenNgayLe" class="text-xs text-gray-600">Không có ngày lễ</span>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-    // Tiêu
-    const tieu = data.tieu;
-    let tieuHTML = `<b>${tieu.tieuDe.replace("hôm nay ", "")}</b><br><table><tr><th>Khu Vực</th><th>Giá</th><th>Thay Đổi</th></tr>`;
+    <!-- Merged Giá Cà Phê and Giá Tiêu with single line layout -->
+    <div class="card p-3">
+      <div class="flex justify-between items-center mb-2">
+        <div><b class="text-xs md:text-sm font-semibold text-gray-800">Giá cà phê ngày 04/06/2025</b></div>
+        <div><b class="text-xs md:text-sm font-semibold text-gray-800">Giá tiêu ngày 04/06/2025</b></div>
+      </div>
+      <div id="giaNongSan" class="text-xs md:text-sm">Đang tải giá nông sản...</div>
+    </div>
+  </div>
 
-    tieu.data.forEach(item => {
-      let changeClass = item.thayDoi > 0 ? 'positive' : item.thayDoi < 0 ? 'negative' : '';
-      let changeText = item.thayDoi > 0 ? `+ ${item.thayDoi.toLocaleString('vi-VN')}` :
-                       item.thayDoi < 0 ? `- ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `Không đổi`;
+  <script>
+    // Three.js for 3D background
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    const geometry = new THREE.SphereGeometry(5, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0x38a169, wireframe: true });
+    const sphere = new THREE.Mesh(geometry, material);
 
-      tieuHTML += `<tr>
-                     <td>${item.khuVuc}</td>
-                     <td>${item.giaMua.toLocaleString('vi-VN')}</td>
-                     <td><span class="${changeClass}">${changeText}</span></td>
-                   </tr>`;
+    camera.position.z = 10;
+    
+    function animate() {
+      requestAnimationFrame(animate);
+      sphere.rotation.y += 0.005;
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    tieuHTML += `</table>`;
-    document.getElementById('giaTieu').innerHTML = tieuHTML;
+    // Modified JavaScript to merge price tables with single line headers
+    async function loadGia() {
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzQ1loBs5fd9I4Pwo1IN-2u26nGSBSefkJFibPxzKVBktoTH9pM2MeCcK0F-0Lfebe_/exec');
+        const data = await response.json();
 
-  } catch (error) {
-    document.getElementById('giaCaPhe').innerHTML = "🚫 Không lấy được giá.";
-    document.getElementById('giaTieu').innerHTML = "🚫 Không lấy được giá.";
-    console.error('Lỗi:', error);
-  }
-}
+        // Merged table with reduced width
+        let nongSanHTML = `
+          <table class="mt-1">
+            <tr><th>Sản phẩm</th><th>Khu vực</th><th>Giá</th><th>Thay đổi</th></tr>`;
+
+        // Cà phê
+        const cp = data.caphe;
+        nongSanHTML += `
+          <tr>
+            <td>Cà phê</td>
+            <td>Đắk Nông</td>
+            <td>${cp.gia.toLocaleString('vi-VN')}</td>
+            <td>
+              <span class="${cp.thaydoi > 0 ? 'positive' : cp.thaydoi < 0 ? 'negative' : ''}">
+                ${cp.thaydoi > 0 ? `+ ${cp.thaydoi.toLocaleString('vi-VN')}` :
+                  cp.thaydoi < 0 ? `- ${Math.abs(cp.thaydoi).toLocaleString('vi-VN')}` : `Không đổi`}
+              </span>
+            </td>
+          </tr>`;
+
+        // Tiêu
+        const tieu = data.tieu;
+        tieu.data.forEach(item => {
+          let changeClass = item.thayDoi > 0 ? 'positive' : item.thayDoi < 0 ? 'negative' : '';
+          let changeText = item.thayDoi > 0 ? `+ ${item.thayDoi.toLocaleString('vi-VN')}` :
+                           item.thayDoi < 0 ? `- ${Math.abs(item.thayDoi).toLocaleString('vi-VN')}` : `Không đổi`;
+          nongSanHTML += `
+            <tr>
+              <td>Tiêu</td>
+              <td>${item.khuVuc}</td>
+              <td>${item.giaMua.toLocaleString('vi-VN')}</td>
+              <td><span class="${changeClass}">${changeText}</span></td>
+            </tr>`;
+        });
+
+        nongSanHTML += `</table>`;
+        document.getElementById('giaNongSan').innerHTML = nongSanHTML;
+
+      } catch (error) {
+        document.getElementById('giaNongSan').innerHTML = "🚫 Không lấy được giá.";
+        console.error('Lỗi:', error);
+      }
+    }
 
     loadGia();
-    setInterval(loadGia, 300000); // Cập nhật mỗi 5 phút
+    setInterval(loadGia, 300000);
 
-    // Cập nhật thời gian thực
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
@@ -264,7 +226,6 @@ body {
       const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
       document.getElementById('thu').textContent = weekdays[now.getDay()];
       
-      // Cập nhật ngày lễ
       const today = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}`;
       loadNgayLe(today);
     }
@@ -272,7 +233,6 @@ body {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Gọi API lấy lịch âm dương
     function getLichAmDuong() {
       const url = 'https://script.google.com/macros/s/AKfycbzk1k3wh6KS0B3yDJzZm07HTYgmkP6sGd0HzhAjN5Kh3bGlFJgRRa93aFHzdNCOP1fz/exec';
 
@@ -291,7 +251,6 @@ body {
         });
     }
 
-    // Lấy dữ liệu ngày lễ từ le.json
     function loadNgayLe(today) {
       fetch('le.json')
         .then(response => response.json())
