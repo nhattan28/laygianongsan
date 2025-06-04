@@ -7,81 +7,112 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <style>
+<style>
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #e6f3e6, #f0f7fa);
+    color: #2d3748;
+    margin: 0;
+    overflow-x: hidden; /* Ngăn cuộn ngang trên mobile */
+  }
+  #three-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.2;
+    width: 100vw;
+    height: 100vh;
+  }
+  .card {
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin: 5px; /* Thêm margin cho card trên mobile */
+  }
+  .card:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+  table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    font-size: 1.2rem;
+  }
+  th, td {
+    border: 1px solid #e2e8f0;
+    padding: 8px;
+    text-align: center;
+    word-break: break-word; /* Cho phép ngắt chữ trên mobile */
+  }
+  th {
+    background: #edf2f7;
+    font-weight: 600;
+  }
+  .positive {
+    color: #38a169;
+    font-weight: bold;
+  }
+  .negative {
+    color: #e53e3e;
+    font-weight: bold;
+  }
+  .nav-link {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    background: #edf2f7;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin: 0 4px;
+    font-size: 1rem; /* Cỡ chữ lớn hơn cho nav-link */
+    display: inline-block; /* Đảm bảo bố cục tốt trên mobile */
+  }
+  .nav-link:hover {
+    background: #2b6cb0;
+    color: white;
+    transform: scale(1.05);
+  }
+  /* Tăng cỡ chữ cho ngayDacBiet và tenNgayLe */
+  #ngayDacBiet, #tenNgayLe {
+    font-size: 1rem;
+    color: #2d3748;
+    display: block;
+    padding: 2px 0;
+  }
+  @media (max-width: 640px) {
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #e6f3e6, #f0f7fa);
-      color: #2d3748;
-      margin: 0;
-      overflow: hidden;
+      overflow-x: hidden; /* Đảm bảo không cuộn ngang */
     }
     #three-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      opacity: 0.2;
+      width: 100%;
+      height: auto;
     }
     .card {
-      backdrop-filter: blur(10px);
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-2px) scale(1.02);
+      margin: 2px; /* Giảm margin trên mobile */
     }
     table {
-      width: 100%; /* Reduced width to minimize excess space */
-      margin: auto;
-      border-collapse: collapse;
-      font-size: 0.8rem;
+      font-size: 0.9rem; /* Giảm cỡ chữ nhưng vẫn dễ đọc */
+      width: 95%; /* Tăng width để lấp đầy màn hình */
     }
     th, td {
-      border: 1px solid #e2e8f0;
-      padding: 4px;
-      text-align: center;
-    }
-    th {
-      background: #edf2f7;
-      font-weight: 600;
-    }
-    .positive {
-      color: #38a169;
-      font-weight: bold;
-    }
-    .negative {
-      color: #e53e3e;
-      font-weight: bold;
+      padding: 4px; /* Giảm padding trên mobile */
+      font-size: 0.9rem; /* Đồng bộ cỡ chữ với table */
     }
     .nav-link {
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      background: #edf2f7;
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.8rem; /* Giảm cỡ chữ nav-link trên mobile */
+      margin: 0 2px;
+      white-space: nowrap; /* Ngăn ngắt dòng cho nav-link */
     }
-    .nav-link:hover {
-      background: #2b6cb0;
-      color: white;
-      transform: scale(1.05);
+    #ngayDacBiet, #tenNgayLe {
+      font-size: 0.85rem; /* Giảm cỡ chữ trên mobile nhưng vẫn rõ */
+      padding: 1px 0;
     }
-    @media (max-width: 640px) {
-      table {
-        font-size: 0.7rem;
-        width: 90%; /* Adjust width for mobile */
-      }
-      th, td {
-        padding: 3px;
-      }
-      .nav-link {
-        padding: 4px 8px;
-        font-size: 0.75rem;
-      }
-      h3 {
-        font-size: 1rem;
-      }
+    h3 {
+      font-size: 0.9rem; /* Giảm cỡ chữ tiêu đề trên mobile */
     }
-  </style>
+  }
+</style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-2">
   <canvas id="three-canvas"></canvas>
