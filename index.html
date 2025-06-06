@@ -8,9 +8,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <style>
-  body {
+   body {
     font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(135deg, #e6f3e6, #f0f7fa);
+    background: linear-gradient(-45deg, #d2f0e4, #fdf6e3, #fce4ec, #e3f2fd);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
     color: #2d3748;
     margin: 0;
     overflow-x: hidden;
@@ -24,13 +26,15 @@
     width: 100vw;
     height: 100vh;
   }
-  .card {
-    backdrop-filter: blur(10px);
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    margin: 2px;
-  }
+ .card {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+}
+
   .card:hover {
     transform: translateY(-2px) scale(1.02);
   }
@@ -45,6 +49,13 @@
     padding: 4px;
     text-align: center;
     word-break: break-word;
+  }
+  /* Specific styling for the Giá Nông Sản table rows */
+  #giaNongSan table tr {
+    margin-bottom: 5px; /* Add spacing between rows */
+  }
+  #giaNongSan table, #giaNongSan th, #giaNongSan td {
+    border: 0.5px solid #e2e8f0;
   }
   th {
     background: #edf2f7;
@@ -87,15 +98,21 @@
       height: auto;
     }
     .card {
-      margin: 1px;
+      margin: 2px;
     }
     table {
       font-size: 0.9rem;
       width: 95%;
     }
     th, td {
-      padding: 2px;
+      padding: 3px;
       font-size: 0.9rem;
+    }
+    #giaNongSan table tr {
+      margin-bottom: 3px; /* Reduced spacing on mobile */
+    }
+    #giaNongSan table, #giaNongSan th, #giaNongSan td {
+      border: 0.3px solid #e2e8f0;
     }
     .nav-link {
       padding: 2px 4px;
