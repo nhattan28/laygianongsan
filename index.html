@@ -10,10 +10,12 @@
 <style>
   body {
     font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(135deg, #e6f3e6, #f0f7fa);
+    background: linear-gradient(-45deg, #d2f0e4, #fdf6e3, #fce4ec, #e3f2fd);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
     color: #2d3748;
     margin: 0;
-    overflow-x: hidden; /* Ngăn cuộn ngang trên mobile */
+    overflow-x: hidden;
   }
   #three-canvas {
     position: fixed;
@@ -34,11 +36,21 @@
   .card:hover {
     transform: translateY(-2px) scale(1.02);
   }
-  table {
+  .card {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+}
+
+table {
     width: 100%;
     margin: auto;
     border-collapse: collapse;
     font-size: 1.1 rem;
+    border: none; /* ✅ xóa khung ngoài cùng */
   }
   th, td {
     border: 1px solid #e2e8f0;
